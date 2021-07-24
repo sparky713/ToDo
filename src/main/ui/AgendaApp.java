@@ -15,11 +15,14 @@ public class AgendaApp {
     private Course eng110;
     private Course math221;
     private Course math220;
+    private CourseList defaultCourses;
     private Scanner userInput;
+    String selection = "";
 
-    // EFFECTS: runs the application
+    // EFFECTS: runs the application and initiates a course list
     public AgendaApp() {
         runProgram();
+        defaultCourses = new CourseList();
     }
 
     private void runProgram() {
@@ -33,6 +36,7 @@ public class AgendaApp {
 
             if (input.equals("s")) {
                 selectCourse();
+                selectedCourseToView();
             } else if (input.equals("+")) {
                 addCourse();
             } else if (input.equals("-")) {
@@ -45,9 +49,48 @@ public class AgendaApp {
         System.out.println("See you again!");
     }
 
+    private void selectedCourseToView() {
+        if (selection.equals("1")) {
+            System.out.println("Welcome to CPSC210!");
+            System.out.println("Your Tasks: ");
+        } else if (selection.equals("2")) {
+            System.out.println("Welcome to ENGL110!");
+            System.out.println("Your Tasks: ");
+        } else if (selection.equals("3")) {
+            System.out.println("Welcome to MATH221!");
+            System.out.println("Your Tasks: ");
+        } else {
+            System.out.println("Welcome to MATH220!");
+            System.out.println("Your Tasks: ");
+        }
+    }
+
+    // EFFECTS: displays the menu of options to the user
+    private void displaysOptions() {
+        System.out.println("\nChoose an option:");
+        System.out.println("\ts -> view courses");
+        System.out.println("\t+ -> add a new course");
+        System.out.println("\t- -> remove a course");
+        System.out.println("\tq -> quit application");
+    }
 
 
     private void removeCourse() {
+        System.out.println("Select a course to remove");
+        selectCourse();
+        if (selection.equals("1")) {
+            defaultCourses.removeCourse(cs210);
+            System.out.println("Successfully removed CPSC210!");
+        } else if (selection.equals("2")) {
+            defaultCourses.removeCourse(eng110);
+            System.out.println("Successfully removed ENGL110!");
+        } else if (selection.equals("3")) {
+            defaultCourses.removeCourse(math221);
+            System.out.println("Successfully removed MATH221!");
+        } else {
+            defaultCourses.removeCourse(math220);
+            System.out.println("Successfully removed MATH220!");
+        }
     }
 
     private void addCourse() {
@@ -62,6 +105,8 @@ public class AgendaApp {
         String stime = String.valueOf(start);
         String etime = String.valueOf(end);
         Course newCourse = new Course(code, start, end, prof);
+        defaultCourses.addCourse(newCourse);
+
         System.out.println("Successfully added " + code + "!");
         System.out.println("Class starts at " + stime + " and ends at " + etime);
         System.out.println(code + " Professor: " + prof);
@@ -77,43 +122,22 @@ public class AgendaApp {
         math220 = new Course("MATH220", 9.5, 1, "TBD");
     }
 
-    // EFFECTS: displays the menu of options to the user
-    private void displaysOptions() {
-        System.out.println("\nChoose an option:");
-        System.out.println("\ts -> view courses");
-        System.out.println("\t+ -> add a new course");
-        System.out.println("\t- -> remove a course");
-        System.out.println("\tq -> quit application");
-    }
-
 
     // EFFECTS: prompts user to select a listed course and returns the selected course
     private void selectCourse() {
-        String courseToView = "";
 
-        while (!(courseToView.equals("1") || courseToView.equals("2")
-                || courseToView.equals("3") || courseToView.equals("4"))) {
+
+        while (!(selection.equals("1") || selection.equals("2")
+                || selection.equals("3") || selection.equals("4"))) {
             System.out.println("\nChoose a course to view:");
             System.out.println("1 = CPSC210");
             System.out.println("2 = ENGL110");
             System.out.println("3 = MATH221");
             System.out.println("4 = MATH220");
-            courseToView = userInput.next();
+            selection = userInput.next();
         }
 
-        if (courseToView.equals("1")) {
-            System.out.println("Welcome to CPSC210!");
-        //    return cs210;
-        } else if (courseToView.equals("2")) {
-            System.out.println("Welcome to ENGL110!");
-        //    return eng110;
-        } else if (courseToView.equals("3")) {
-            System.out.println("Welcome to MATH221!");
-        //    return math221;
-        } else {
-            System.out.println("Welcome to MATH220!");
-           // return math220;
-        }
+
     }
 
 }
