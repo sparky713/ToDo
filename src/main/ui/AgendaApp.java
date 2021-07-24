@@ -1,8 +1,10 @@
 package ui;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import model.Course;
 import model.CourseList;
 import model.Task;
+import model.TaskList;
 
 import java.util.Scanner;
 
@@ -11,6 +13,10 @@ public class AgendaApp {
 
     private Task quiz;
     private Task reading;
+    private Task essay;
+    private Task poemAnalysis;
+    private Task midterm;
+    private TaskList homework;
     private Course cs210;
     private Course eng110;
     private Course math221;
@@ -19,12 +25,43 @@ public class AgendaApp {
     private Scanner userInput;
     String selection = "";
 
-    // EFFECTS: runs the application and initiates a course list
+    // EFFECTS: runs the application
     public AgendaApp() {
         runProgram();
-        defaultCourses = new CourseList();
     }
 
+    // MODIFIES: this and defaultCourses
+    // EFFECTS: initializes the default course list with the default courses added
+    private void courses() {
+        defaultCourses = new CourseList();
+        cs210 = new Course("CPSC210", 9.5, 1, "Felix Grund");
+        eng110 = new Course("ENGL110", 12, 3.5, "Rebecca Sheppard");
+        math221 = new Course("MATH221", 9.5, 1, "TBD");
+        math220 = new Course("MATH220", 9.5, 1, "TBD");
+        defaultCourses.addCourse(cs210);
+        defaultCourses.addCourse(eng110);
+        defaultCourses.addCourse(math221);
+        defaultCourses.addCourse(math220);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes tasks and a task list, adds the tasks to the list
+    private void tasks() {
+        homework = new TaskList();
+        quiz = new Task("quiz1", cs210, false);
+        reading = new Task("C5-8", cs210, false);
+        essay = new Task("Theme Analysis Essay", eng110, false);
+        poemAnalysis = new Task("Poem Analysis", eng110, false);
+        midterm = new Task("Midterm 1", math221, false);
+        homework.addTask(quiz);
+        homework.addTask(reading);
+        homework.addTask(essay);
+        homework.addTask(poemAnalysis);
+        homework.addTask(midterm);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes the users inputs
     private void runProgram() {
         userInput = new Scanner(System.in);
         boolean running = true;
@@ -49,21 +86,29 @@ public class AgendaApp {
         System.out.println("See you again!");
     }
 
+    // EFFECTS: displays a welcome sign for the selected course and the course's tasks
     private void selectedCourseToView() {
         if (selection.equals("1")) {
             System.out.println("Welcome to CPSC210!");
             System.out.println("Your Tasks: ");
+            // TODO: print list of tasks
+//            System.out.println("- " + quiz.getTaskDescription());
+//            System.out.println("- " + reading.getTaskDescription());
         } else if (selection.equals("2")) {
             System.out.println("Welcome to ENGL110!");
             System.out.println("Your Tasks: ");
+//            System.out.println("- " + essay.getTaskDescription());
+//            System.out.println("- " + poemAnalysis.getTaskDescription());
         } else if (selection.equals("3")) {
             System.out.println("Welcome to MATH221!");
             System.out.println("Your Tasks: ");
+//            System.out.println("- " + midterm.getTaskDescription());
         } else {
             System.out.println("Welcome to MATH220!");
             System.out.println("Your Tasks: ");
         }
     }
+
 
     // EFFECTS: displays the menu of options to the user
     private void displaysOptions() {
@@ -74,7 +119,8 @@ public class AgendaApp {
         System.out.println("\tq -> quit application");
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: removes a course
     private void removeCourse() {
         System.out.println("Select a course to remove");
         selectCourse();
@@ -93,6 +139,8 @@ public class AgendaApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds a course
     private void addCourse() {
         System.out.println("Enter Course Name:");
         String code = userInput.next();
@@ -111,15 +159,6 @@ public class AgendaApp {
         System.out.println("Class starts at " + stime + " and ends at " + etime);
         System.out.println(code + " Professor: " + prof);
 
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes the courses
-    private void courses() {
-        cs210 = new Course("CPSC210", 9.5, 1, "Felix Grund");
-        eng110 = new Course("ENGL110", 12, 3.5, "Rebecca Sheppard");
-        math221 = new Course("MATH221", 9.5, 1, "TBD");
-        math220 = new Course("MATH220", 9.5, 1, "TBD");
     }
 
 
