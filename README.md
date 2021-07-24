@@ -12,7 +12,7 @@ contents. **Do It Now UBC**, you can now access your courses from a single appli
 *Features*:
 - A courses timetable 
 - A personalized todo list with due dates
-- A Course page that contains upcoming tasks and links to the course's external websites
+- A Course page that contains upcoming tasks
 
 
 I wanted to create this project ever since starting first year at UBC online when I had to keep track
