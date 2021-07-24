@@ -91,18 +91,12 @@ public class AgendaApp {
         if (selection.equals("1")) {
             System.out.println("Welcome to CPSC210!");
             System.out.println("Your Tasks: ");
-            // TODO: print list of tasks
-//            System.out.println("- " + quiz.getTaskDescription());
-//            System.out.println("- " + reading.getTaskDescription());
         } else if (selection.equals("2")) {
             System.out.println("Welcome to ENGL110!");
             System.out.println("Your Tasks: ");
-//            System.out.println("- " + essay.getTaskDescription());
-//            System.out.println("- " + poemAnalysis.getTaskDescription());
         } else if (selection.equals("3")) {
             System.out.println("Welcome to MATH221!");
             System.out.println("Your Tasks: ");
-//            System.out.println("- " + midterm.getTaskDescription());
         } else {
             System.out.println("Welcome to MATH220!");
             System.out.println("Your Tasks: ");
