@@ -13,12 +13,11 @@ contents. **Do It Now UBC**, you can now access your courses from a single appli
 - A courses timetable 
 - A personalized todo list with due dates
 - A Course page that contains upcoming tasks and links to the course's external websites
-- A Calendar
 
 
 I wanted to create this project ever since starting first year at UBC online when I had to keep track
 of all the different websites and modes of delivery that different courses preferred. Personally, keeping 
-a paper agenda is not as effective as a digital one that can send reminders and easier to accidently miss
+a paper agenda is not as effective as a digital one that can send reminders so that I don't accidentally miss
 deadlines. Therefore, this motivated me to focus my 210 project on a school-oriented homework and course 
 tracker application for the people of my school community.
 
@@ -32,8 +31,4 @@ tracker application for the people of my school community.
 - As a user, I want to be able to remove a task from my to-do list
 - As a user, I want to be able to view all my tasks in my to-do list
 - As a user, I want to be able to set a deadline for my tasks
-- As a user, I want to be able to set and receive notifications/alarms for the tasks I choose
 - As a user, I want to be able to set a start and end time for my courses
-- As a user, I want to be able to set the dates for my courses
-- As a user, I want to be able to view a courses timetable 
-- As a user, I want to be able to add external links to my courses
