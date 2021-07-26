@@ -2,17 +2,17 @@
 
 ## Proposal
 
-More than just an agenda, **Do It Now UBC** is a personal assistant app that will remind and keep students on track
-with their courses and personal tasks. **Do It Now UBC** is designed for all UBC students
+My project for CPSC210 is a personal **agenda application** designed to help keep students on track
+with their courses and make personalized to-do lists. This application is intended for all UBC students
 and especially those who need extra assistance in managing their time and meeting deadlines.
 With the move to online learning, many courses use different platforms to deliver the course
-contents. **Do It Now UBC**, you can now access your courses from a single application.
+contents. With this application, you will now be able to see your tasks for all your different courses in one spot.
 
 
 *Features*:
 - A courses timetable 
 - A personalized todo list with due dates
-- A Course page that contains upcoming tasks
+- Individual course tabs with tasks specific to the course 
 
 
 I wanted to create this project ever since starting first year at UBC online when I had to keep track
@@ -30,5 +30,6 @@ tracker application for the people of my school community.
 - As a user, I want to be able to add a task to my to-do list
 - As a user, I want to be able to remove a task from my to-do list
 - As a user, I want to be able to view all my tasks in my to-do list
+- As a user, I want to be able to view tasks specific to a course
 - As a user, I want to be able to set a deadline for my tasks
 - As a user, I want to be able to set a start and end time for my courses

@@ -16,6 +16,7 @@ public class Course {
         professor = prof;
     }
 
+    // getters & setters
     public String getCourseName() {
         return this.courseName;
     }

@@ -26,9 +26,17 @@ public class TaskTest {
 
 
     @Test
-    public void testSetToComplete() {
+    public void testSetToCompleteNotCompleteToComplete() {
         assertFalse(quiz1.getStatus());
         quiz1.setToComplete();
         assertTrue(quiz1.getStatus());
+    }
+
+    @Test
+    public void testSetToCompleteCompleteToNotComplete() {
+        assertFalse(quiz1.getStatus());
+        quiz1.setToComplete();
+        quiz1.setToComplete();
+        assertFalse(quiz1.getStatus());
     }
 }

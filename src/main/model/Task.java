@@ -16,12 +16,14 @@ public class Task {
         status = isItComplete;
     }
 
+    // getters & setters
     public String getTaskDescription() {
 
         return this.taskDescription;
     }
 
     public Course getCourse() {
+
         return this.associatedCourse;
     }
 
@@ -36,10 +38,9 @@ public class Task {
     }
 
 
-    // REQUIRES: Task is not yet completed
-    // EFFECTS: sets the status of the task to completed
+    // EFFECTS: changes the completed/not completed status of the task
     public void setToComplete() {
-        this.status = true;
+        this.status = !status;
     }
 }
 

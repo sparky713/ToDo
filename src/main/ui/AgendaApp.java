@@ -7,6 +7,8 @@ import model.TaskList;
 
 import java.util.Scanner;
 
+
+// UI Functionality and methods are implemented from Teller App. Link below:
 // Course tasks application
 public class AgendaApp {
 
@@ -48,7 +50,7 @@ public class AgendaApp {
     private void tasks() {
         homework = new TaskList();
         quiz = new Task("quiz1", cs210, false);
-        reading = new Task("C5-8", cs210, false);
+        reading = new Task("Read C5-8", cs210, false);
         essay = new Task("Theme Analysis Essay", eng110, false);
         poemAnalysis = new Task("Poem Analysis", eng110, false);
         midterm = new Task("Midterm 1", math221, false);
@@ -64,7 +66,7 @@ public class AgendaApp {
     private void runProgram() {
         userInput = new Scanner(System.in);
         boolean running = true;
-        String input = null;
+        String input;
 
         while (running) {
             displaysOptions();
@@ -77,6 +79,8 @@ public class AgendaApp {
                 addCourse();
             } else if (input.equals("-")) {
                 removeCourse();
+            } else if (input.equals("t")) {
+                addTask();
             } else if (input.equals("q")) {
                 running = false;
             }
@@ -85,24 +89,64 @@ public class AgendaApp {
         System.out.println("See you again!");
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds a task
+    private void addTask() {
+        tasks();
+        courses();
+        Course course;
+        System.out.println("Enter Task Description:");
+        String description = userInput.next();
+        selectCourse();
+        if (selection.equals("1")) {
+            course = cs210;
+        } else if (selection.equals("2")) {
+            course = eng110;
+        } else if (selection.equals("3")) {
+            course = math221;
+        } else {
+            course = math220;
+        }
+        Task newTask = new Task(description, course, false);
+        homework.addTask(newTask);
+
+        System.out.println("Successfully added " + description + "!");
+    }
+
+
+    // EFFECTS: prompts user to select a listed course and returns the selected course
+    private void selectCourse() {
+        while (!(selection.equals("1") || selection.equals("2")
+                || selection.equals("3") || selection.equals("4"))) {
+            System.out.println("\nChoose a course:");
+            System.out.println("1 = CPSC210");
+            System.out.println("2 = ENGL110");
+            System.out.println("3 = MATH221");
+            System.out.println("4 = MATH220");
+            selection = userInput.next();
+        }
+    }
+
     // EFFECTS: displays a welcome sign for the selected course and the course's tasks
     private void selectedCourseToView() {
+        courses();
+        tasks();
         if (selection.equals("1")) {
-            System.out.println("Welcome to CPSC210!");
-            System.out.println("Your Tasks: ");
-//            System.out.println("- " + quiz.getTaskDescription());
-//            System.out.println("- " + reading.getTaskDescription());
+            System.out.println("Welcome to " + cs210.getCourseName() + "!");
+            System.out.println("Your Tasks:");
+            System.out.println("- " + quiz.getTaskDescription());
+            System.out.println("- " + reading.getTaskDescription());
         } else if (selection.equals("2")) {
-            System.out.println("Welcome to ENGL110!");
+            System.out.println("Welcome to " + eng110.getCourseName() + "!");
             System.out.println("Your Tasks: ");
-//            System.out.println("- " + essay.getTaskDescription());
-//            System.out.println("- " + poemAnalysis.getTaskDescription());
+            System.out.println("- " + essay.getTaskDescription());
+            System.out.println("- " + poemAnalysis.getTaskDescription());
         } else if (selection.equals("3")) {
-            System.out.println("Welcome to MATH221!");
+            System.out.println("Welcome to " + math221.getCourseName() + "!");
             System.out.println("Your Tasks: ");
-//            System.out.println("- " + midterm.getTaskDescription());
+            System.out.println("- " + midterm.getTaskDescription());
         } else {
-            System.out.println("Welcome to MATH220!");
+            System.out.println("Welcome to " + math220.getCourseName() + "!");
             System.out.println("Your Tasks: ");
         }
     }
@@ -114,6 +158,7 @@ public class AgendaApp {
         System.out.println("\ts -> view courses");
         System.out.println("\t+ -> add a new course");
         System.out.println("\t- -> remove a course");
+        System.out.println("\tt -> add new task");
         System.out.println("\tq -> quit application");
     }
 
@@ -122,9 +167,10 @@ public class AgendaApp {
     private void removeCourse() {
         System.out.println("Select a course to remove");
         selectCourse();
+        courses();
         if (selection.equals("1")) {
             defaultCourses.removeCourse(cs210);
-            System.out.println("Successfully removed CPSC210!");
+            System.out.println("Successfully removed" + cs210.getCourseName() + "!");
         } else if (selection.equals("2")) {
             defaultCourses.removeCourse(eng110);
             System.out.println("Successfully removed ENGL110!");
@@ -140,6 +186,7 @@ public class AgendaApp {
     // MODIFIES: this
     // EFFECTS: adds a course
     private void addCourse() {
+        courses();
         System.out.println("Enter Course Name:");
         String code = userInput.next();
         System.out.println("Enter Class Starting Time:");
@@ -156,24 +203,6 @@ public class AgendaApp {
         System.out.println("Successfully added " + code + "!");
         System.out.println("Class starts at " + stime + " and ends at " + etime);
         System.out.println(code + " Professor: " + prof);
-
-    }
-
-
-    // EFFECTS: prompts user to select a listed course and returns the selected course
-    private void selectCourse() {
-
-
-        while (!(selection.equals("1") || selection.equals("2")
-                || selection.equals("3") || selection.equals("4"))) {
-            System.out.println("\nChoose a course to view:");
-            System.out.println("1 = CPSC210");
-            System.out.println("2 = ENGL110");
-            System.out.println("3 = MATH221");
-            System.out.println("4 = MATH220");
-            selection = userInput.next();
-        }
-
 
     }
 
