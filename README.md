@@ -24,12 +24,12 @@ tracker application for the people of my school community.
 
 ## User Stories
 
-- As a user, I want to be able to add a course to my course list
-- As a user, I want to be able to remove a course from my course list
-- As a user, I want to be able to view all my courses in the course list
-- As a user, I want to be able to add a task to my to-do list
+- As a user, I want to be able to add a course to my course list (done)
+- As a user, I want to be able to remove a course from my course list (done)
+- As a user, I want to be able to view all my courses in the course list (done)
+- As a user, I want to be able to add a task to my to-do list (done)
 - As a user, I want to be able to remove a task from my to-do list
 - As a user, I want to be able to view all my tasks in my to-do list
-- As a user, I want to be able to view tasks specific to a course
+- As a user, I want to be able to view tasks specific to a course (done)
 - As a user, I want to be able to set a deadline for my tasks
-- As a user, I want to be able to set a start and end time for my courses
+- As a user, I want to be able to set a start and end time for my courses (done)

@@ -7,8 +7,9 @@ import model.TaskList;
 
 import java.util.Scanner;
 
-
 // UI Functionality and methods are implemented from Teller App. Link below:
+// https://github.students.cs.ubc.ca/CPSC210/TellerAppNotRobust/blob/c0c6a26c7e1625de943cd7ac6d4772eda9326239/src/main
+// /ca/ubc/cpsc210/bank/model/Account.java#L11
 // Course tasks application
 public class AgendaApp {
 
