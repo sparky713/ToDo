@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.CourseNotFoundException;
+import exceptions.TaskNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -23,14 +25,19 @@ public class TaskList implements Writable {
         return tasksToDo.size();
     }
 
-    // EFFECTS: returns the task with the given task description, return null if not found
-    public Task getTask(String task) {
+    // EFFECTS: makes a new list holding the descriptions of the tasks in the task list
+    // and returns the course with the given course code,
+    // throws TaskNotFoundException if the course is not in the list
+    public Task getTask(String task) throws TaskNotFoundException {
+        List<String> taskDescriptions = new ArrayList<>();
         for (Task t: tasksToDo) {
-            if (t.getTaskDescription() == task) {
-                return t;
-            }
+            taskDescriptions.add(t.getTaskDescription());
         }
-        return null;
+        if (!taskDescriptions.contains(task)) {
+            throw new TaskNotFoundException();
+        } else {
+            return tasksToDo.get(taskDescriptions.indexOf(task));
+        }
     }
 
     // EFFECTS: returns true if given task is in list, false otherwise

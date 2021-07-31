@@ -1,4 +1,4 @@
 package exceptions;
 
-public class CourseNotFoundException extends Throwable {
+public class CourseNotFoundException extends Exception{
 }

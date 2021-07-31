@@ -1,6 +1,7 @@
 package ui;
 
 import exceptions.CourseNotFoundException;
+import exceptions.TaskNotFoundException;
 import model.Course;
 import model.CourseList;
 import model.Task;
@@ -23,23 +24,29 @@ import java.util.Scanner;
 public class AgendaApp {
     private static final String JSON_TASKS = "./data/tasks.json";
     private static final String JSON_COURSES = "./data/courses.json";
+    private static final String JSON_COMPLETED_TASKS = "./data/completed.json";
     private TaskList myTasks;
+    private TaskList completedTasks;
     private CourseList myCourses;
     private Scanner userInput;
-    //  String selection = "";
     private JsonWriterForTasks jsonTasksWriter;
+    private JsonWriterForTasks jsonCompletedTasksWriter;
     private JsonWriterForCourses jsonCoursesWriter;
     private JsonReaderForTasks jsonTasksReader;
+    private JsonReaderForTasks jsonCompletedTasksReader;
     private JsonReaderForCourses jsonCoursesReader;
 
     // EFFECTS: runs the application
     public AgendaApp() throws FileNotFoundException {
         myCourses = new CourseList();
         myTasks = new TaskList();
+        completedTasks = new TaskList();
         jsonTasksWriter = new JsonWriterForTasks(JSON_TASKS);
         jsonTasksReader = new JsonReaderForTasks(JSON_TASKS);
         jsonCoursesWriter = new JsonWriterForCourses(JSON_COURSES);
         jsonCoursesReader = new JsonReaderForCourses(JSON_COURSES);
+        jsonCompletedTasksWriter = new JsonWriterForTasks(JSON_COMPLETED_TASKS);
+        jsonCompletedTasksReader = new JsonReaderForTasks(JSON_COMPLETED_TASKS);
         runProgram();
     }
 
@@ -69,138 +76,42 @@ public class AgendaApp {
         System.out.println("\nChoose an option:");
         System.out.println("\tc -> view courses");
         System.out.println("\tt -> view tasks");
+        System.out.println("\tct -> view completed tasks");
         System.out.println("\tst -> save tasks to file");
         System.out.println("\tsc -> save courses to file");
+        System.out.println("\tsct -> save completed tasks to file");
         System.out.println("\tlt -> load tasks from file");
         System.out.println("\tlc -> load courses from file");
+        System.out.println("\tlct -> load completed tasks from file");
         System.out.println("\tq -> quit application");
-
-        System.out.println("\t+t -> add a task");
-        System.out.println("\t-t -> remove a task");
-        System.out.println("\t+c -> add a new course");
-        System.out.println("\t-c -> remove a course");
     }
 
-    // TODO method line too long
     // MODIFIES: this
     // EFFECTS: processes the user's input
     private void processUserInput(String input) {
         if (input.equals("c")) {
             displayCourses();
-        } else if (input.equals("+c")) {
-            addCourse();
-        } else if (input.equals("-c")) {
-            removeCourse();
+            nextCourseCommand(input);
         } else if (input.equals("t")) {
             viewTasks();
-        } else if (input.equals("+t")) {
-            addATask();
-        } else if (input.equals("-t")) {
-            removeATask();
-        } else if (input.equals("ct")) {
-            chooseTaskToComplete();
+            nextTaskCommand(input);
+        } else if (input.equals("ct")) { 
+            viewCompletedTasks();
         } else if (input.equals("st")) {
             saveTasks();
         } else if (input.equals("sc")) {
             saveCourses();
+        } else if (input.equals("sct")) {
+            saveCompletedTasks();
         } else if (input.equals("lt")) {
             loadTasks();
         } else if (input.equals("lc")) {
             loadCourses();
+        } else if (input.equals("lct")) {
+            loadCompletedTasks();
         } else {
             System.out.println("Option not found, please select again.");
         }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads courses from file
-    private void loadCourses() {
-        try {
-            myCourses = jsonCoursesReader.read();
-            System.out.println("Loaded my courses from " + JSON_TASKS);
-        } catch (IOException e) {
-            System.out.println("Unable to retrieve from file: " + JSON_TASKS);
-        }
-    }
-
-    private void saveCourses() {
-        try {
-            jsonCoursesWriter.open();
-            jsonCoursesWriter.write(myCourses);
-            jsonCoursesWriter.close();
-            System.out.println("Saved courses to " + JSON_COURSES);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to save to file: " + JSON_COURSES);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads tasks and courses from file
-    private void loadTasks() {
-        try {
-            myTasks = jsonTasksReader.read();
-            System.out.println("Loaded my tasks from " + JSON_TASKS);
-        } catch (IOException e) {
-            System.out.println("Unable to retrieve from file: " + JSON_TASKS);
-        }
-    }
-
-    // EFFECTS: saves the task list and course list to file
-    private void saveTasks() {
-        try {
-            jsonTasksWriter.open();
-            jsonTasksWriter.write(myTasks);
-            jsonTasksWriter.close();
-            System.out.println("Saved tasks to " + JSON_TASKS);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to save to file: " + JSON_TASKS);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: removes a task in the tasks list
-    private void removeATask() {
-        //    tasks();
-        System.out.println("Enter the task to remove:");
-
-        Task remove = myTasks.getTask(userInput.next());
-        String desc = remove.getTaskDescription();
-        myTasks.removeTask(remove);
-        System.out.println("Removed task: " + desc);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: completes a task in the tasks list and adds it to the completed tasks list
-    private void chooseTaskToComplete() {
-        //   tasks();
-        System.out.println("Enter the task you wish to complete:");
-
-        Task toComplete = myTasks.getTask(userInput.next());
-        myTasks.completeTask(toComplete);
-        System.out.println("Completed task: " + toComplete.getTaskDescription());
-    }
-
-    // EFFECTS: displays list of tasks in task list
-    private void viewTasks() {
-        List<Task> tasks = myTasks.getTasks();
-
-        for (Task t : tasks) {
-            System.out.println(t);
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds a task
-    private void addATask() {
-        //   tasks();
-        System.out.println("Enter Task Description:");
-        String description = userInput.next();
-        System.out.println("When is it due?");
-        String dueDate = userInput.next();
-        Task newTask = new Task(description, dueDate, false);
-        myTasks.addTask(newTask);
-
-        System.out.println("Successfully added " + description + "!");
     }
 
 
@@ -215,10 +126,20 @@ public class AgendaApp {
         }
     }
 
+    private void nextCourseCommand(String input) {
+        System.out.println("\t+ -> add a course");
+        System.out.println("\t- -> remove a course");
+        String nextCommand = userInput.next();
+        if (nextCommand.equals("+")) {
+            addCourse();
+        } else if (nextCommand.equals("-")) {
+            removeCourse();
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: adds a course
     private void addCourse() {
-        // courses();
         System.out.println("Enter Course Name:");
         String code = userInput.next();
         System.out.println("Enter Class Starting Time:");
@@ -239,7 +160,6 @@ public class AgendaApp {
     // MODIFIES: this
     // EFFECTS: removes a course
     private void removeCourse() {
-        displayCourses();
         System.out.println("Enter the course you would like to remove:");
         String input = userInput.next();
         try {
@@ -253,4 +173,185 @@ public class AgendaApp {
 
     }
 
+    // EFFECTS: displays list of tasks in task list
+    private void viewTasks() {
+        List<Task> tasks = myTasks.getTasks();
+
+        for (Task t : tasks) {
+            System.out.println(t.getTaskDescription() + " (Due: " + t.getDueDate() + ")");
+        }
+    }
+
+    private void nextTaskCommand(String input) {
+        System.out.println("\t+ -> add a task");
+        System.out.println("\t- -> remove a task");
+        System.out.println("\tcomplete -> complete a task");
+        String nextCommand = userInput.next();
+        if (nextCommand.equals("+")) {
+            addATask();
+        } else if (nextCommand.equals("-")) {
+            removeATask();
+        } else if (nextCommand.equals("complete")) {
+            chooseTaskToComplete();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds a task
+    private void addATask() {
+        System.out.println("Enter Task Description:");
+        String description = userInput.next();
+        System.out.println("When is it due?");
+        String dueDate = userInput.next();
+        Task newTask = new Task(description, dueDate, false);
+        myTasks.addTask(newTask);
+
+        System.out.println("Successfully added " + description + "!");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes a task in the tasks list
+    private void removeATask() {
+        System.out.println("Enter the task to remove:");
+        String input = userInput.next();
+        try {
+            Task remove = myTasks.getTask(input);
+            myTasks.removeTask(remove);
+            System.out.println("Removed task: " + input);
+        } catch (TaskNotFoundException e) {
+            e.printStackTrace();
+            System.out.println(input + " was not found in your tasks.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: completes a task in the tasks list and adds it to the completed tasks list
+    private void chooseTaskToComplete() {
+        System.out.println("Enter the task you wish to complete:");
+        String complete = userInput.next();
+        try {
+            Task toComplete = myTasks.getTask(complete);
+            myTasks.completeTask(toComplete);
+            completedTasks.addTask(toComplete);
+            myTasks.removeTask(toComplete);
+            System.out.println("Completed task: " + toComplete.getTaskDescription());
+        } catch (TaskNotFoundException e) {
+            e.printStackTrace();
+            System.out.println(complete + " was not found in your tasks.");
+        }
+    }
+
+    // EFFECTS: displays tasks in the completed tasks list with their description and due date
+    private void viewCompletedTasks() {
+        List<Task> compTasks = completedTasks.getTasks();
+
+        for (Task ct: compTasks) {
+            System.out.println(ct.getTaskDescription() + " (Was Due: " + ct.getDueDate() + ")");
+        }
+    }
+
+    // EFFECTS: prompts user to choose a list to save to file and saves selected list
+//    private void saveOp(String input) {
+//        String nextCommand;
+//        System.out.println("Select what to save:");
+//        System.out.println("1 -> Tasks");
+//        System.out.println("2 -> Courses");
+//        System.out.println("3 -> Completed Tasks");
+//        nextCommand = userInput.next();
+//        if (nextCommand == "1") {
+//            saveTasks();
+//        } else if (nextCommand == "2") {
+//            saveCourses();
+//        } else if (nextCommand == "3") {
+//            saveCompletedTasks();
+//        }
+//    }
+
+    // EFFECTS: saves the task list to file
+    private void saveTasks() {
+        try {
+            jsonTasksWriter.open();
+            jsonTasksWriter.write(myTasks);
+            jsonTasksWriter.close();
+            System.out.println("Saved tasks to " + JSON_TASKS);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save to file: " + JSON_TASKS);
+        }
+    }
+
+    // EFFECTS: saves the course list to file
+    private void saveCourses() {
+        try {
+            jsonCoursesWriter.open();
+            jsonCoursesWriter.write(myCourses);
+            jsonCoursesWriter.close();
+            System.out.println("Saved courses to " + JSON_COURSES);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save to file: " + JSON_COURSES);
+        }
+    }
+
+    // EFFECTS: saves the completed tasks list to file
+    private void saveCompletedTasks() {
+        try {
+            jsonCompletedTasksWriter.open();
+            jsonCompletedTasksWriter.write(completedTasks);
+            jsonCompletedTasksWriter.close();
+            System.out.println("Saved completed tasks to " + JSON_COMPLETED_TASKS);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save to file: " + JSON_COMPLETED_TASKS);
+        }
+    }
+
+    // EFFECTS: prompts user to choose list to load from file and loads it
+//    private void loadOp(String input) {
+//        String nextCommand;
+//        System.out.println("Select what to load:");
+//        System.out.println("1 -> Tasks");
+//        System.out.println("2 -> Courses");
+//        System.out.println("3 -> Completed Tasks");
+//        nextCommand = userInput.next();
+//        if (nextCommand == "1") {
+//            loadTasks();
+//        } else if (nextCommand == "2") {
+//            loadCourses();
+//        } else if (nextCommand == "3") {
+//            loadCompletedTasks();
+//        }
+//    }
+
+    // MODIFIES: this
+    // EFFECTS: loads tasks from file
+    private void loadTasks() {
+        try {
+            myTasks = jsonTasksReader.read();
+            System.out.println("Loaded my tasks from " + JSON_TASKS);
+        } catch (IOException e) {
+            System.out.println("Unable to retrieve from file: " + JSON_TASKS);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads courses from file
+    private void loadCourses() {
+        try {
+            myCourses = jsonCoursesReader.read();
+            System.out.println("Loaded my courses from " + JSON_COURSES);
+        } catch (IOException e) {
+            System.out.println("Unable to retrieve from file: " + JSON_COURSES);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads completed tasks from file
+    private void loadCompletedTasks() {
+        try {
+            completedTasks = jsonCompletedTasksReader.read();
+            System.out.println("Loaded my completed tasks from " + JSON_COMPLETED_TASKS);
+        } catch (IOException e) {
+            System.out.println("Unable to retrieve from file: " + JSON_COMPLETED_TASKS);
+        }
+    }
+
 }
+

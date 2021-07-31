@@ -30,15 +30,19 @@ public class CourseList implements Writable {
         return Collections.unmodifiableList(myCourses);
     }
 
-    // EFFECTS: returns the course with the given course code,
+    // EFFECTS: makes a new list holding the codes of the courses in the course list
+    // and returns the course with the given course code,
     // throws CourseNotFoundException if the course is not in the list
     public Course getCourse(String courseCode) throws CourseNotFoundException {
-        for (Course c : myCourses) {
-            if (c.getCode() == courseCode) {
-                return c;
-            }
+        List<String> courseCodes = new ArrayList<>();
+        for (Course c: myCourses) {
+            courseCodes.add(c.getCode());
         }
-        throw new CourseNotFoundException();
+        if (!courseCodes.contains(courseCode)) {
+            throw new CourseNotFoundException();
+        } else {
+            return myCourses.get(courseCodes.indexOf(courseCode));
+        }
     }
 
     // REQUIRES: The course is not already in the list

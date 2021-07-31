@@ -10,7 +10,7 @@ contents. With this application, you will now be able to see your tasks for all 
 
 
 *Features*:
-- A courses timetable 
+- A list of your currently enrolled classes
 - A personalized todo list with due dates
 - Individual course tabs with tasks specific to the course 
 
@@ -27,14 +27,19 @@ tracker application for the people of my school community.
 - As a user, I want to be able to add a course to my course list (done)
 - As a user, I want to be able to remove a course from my course list (done)
 - As a user, I want to be able to view all my courses in the course list (done)
-- As a user, I want to be able to add a task to my to-do list (done)
-- As a user, I want to be able to remove a task from my to-do list (done)
-- As a user, I want to be able to view all my tasks in my to-do list (done)
-- As a user, I want to be able to view tasks specific to a course (done)
-- As a user, I want to be able to set a deadline for my tasks (done)
 - As a user, I want to be able to set a start and end time for my courses (done)
+  
+- As a user, I want to be able to add a task to my task list (done)
+- As a user, I want to be able to remove a task from my task list (done)
+- As a user, I want to be able to complete a task from my task list (done)
+- As a user, I want to be able to view all my completed tasks (done)
+- As a user, I want to be able to view all my tasks in my task list (done)
+- As a user, I want to be able to set a deadline for my tasks (done)
 
-- As a user, I want to be able to save my tasks to file
-- As a user, I want to be able to save my courses to file
-- As a user, I want to be able to load my tasks list from file
-- As a user, I want to be able to load my courses from file
+
+- As a user, I want to be able to save my tasks to file (done)
+- As a user, I want to be able to save my courses to file (done)
+- As a user, I want to be able to save my completed tasks to file (done)
+- As a user, I want to be able to load my tasks list from file (done)
+- As a user, I want to be able to load my courses from file (done)
+- As a user, I want to be able to load my completed tasks to file (done)
