@@ -1,7 +1,13 @@
 package ui;
 
+import java.io.FileNotFoundException;
+
 public class Main {
     public static void main(String[] args) {
-        new AgendaApp();
+        try {
+            new AgendaApp();
+        } catch (FileNotFoundException e) {
+            System.out.println("Failed to run application due to file not being found");
+        }
     }
 }

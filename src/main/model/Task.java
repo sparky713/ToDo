@@ -1,18 +1,21 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents a task having a description, associated course, alarm setting
 // and completed/not completed status
-public class Task {
+public class Task implements Writable {
 
     private String taskDescription;
     private boolean status;
-    private Course associatedCourse;
+    private String dueDate;
 
-    // EFFECTS: makes a new task with a description of the task, course it's related
-    //          to, deadline, and whether or not an alarm is set for this task
-    public Task(String description, Course course, boolean isItComplete) {
+    // EFFECTS: makes a new task with a description of the task, the due date entered by user,
+    // and whether or not the task is completed
+    public Task(String description, String dueDate, boolean isItComplete) {
         taskDescription = description;
-        associatedCourse = course;
+        this.dueDate = dueDate;
         status = isItComplete;
     }
 
@@ -22,15 +25,19 @@ public class Task {
         return this.taskDescription;
     }
 
-    public Course getCourse() {
+    public String getDueDate() {
 
-        return this.associatedCourse;
+        return this.dueDate;
     }
 
 
     public boolean getStatus() {
 
         return this.status;
+    }
+
+    public void setDueDate(String date) {
+        this.dueDate = date;
     }
 
     public void setTaskDescription(String description) {
@@ -41,6 +48,15 @@ public class Task {
     // EFFECTS: changes the completed/not completed status of the task
     public void setToComplete() {
         this.status = !status;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("taskDescription", taskDescription);
+        json.put("dueDate", dueDate);
+        json.put("status", status);
+        return json;
     }
 }
 

@@ -1,9 +1,16 @@
 package model;
 
+import exceptions.CourseNotFoundException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // Represents an arraylist of courses
-public class CourseList {
+public class CourseList implements Writable {
 
     private ArrayList<Course> myCourses;
 
@@ -15,6 +22,23 @@ public class CourseList {
 
     public int getSize() {
         return myCourses.size();
+    }
+
+    // method implementation from Thingy in WorkRoom app
+    // EFFECTS: returns an unmodifiable list of Courses in this course list
+    public List<Course> getCourses() {
+        return Collections.unmodifiableList(myCourses);
+    }
+
+    // EFFECTS: returns the course with the given course code,
+    // throws CourseNotFoundException if the course is not in the list
+    public Course getCourse(String courseCode) throws CourseNotFoundException {
+        for (Course c : myCourses) {
+            if (c.getCode() == courseCode) {
+                return c;
+            }
+        }
+        throw new CourseNotFoundException();
     }
 
     // REQUIRES: The course is not already in the list
@@ -46,4 +70,25 @@ public class CourseList {
         }
         return false;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("coursesEnrolled", coursesEnrolledJson());
+        return json;
+    }
+
+    // EFFECTS: returns courses in this course list as a JSON array
+    private JSONArray coursesEnrolledJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Course c : myCourses) {
+            jsonArray.put(c.toJson());
+        }
+
+        return jsonArray;
+    }
 }
+
+
+

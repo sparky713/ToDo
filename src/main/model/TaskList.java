@@ -1,9 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // Represents an arraylist of tasks to be handled
-public class TaskList {
+public class TaskList implements Writable {
 
     private ArrayList<Task> tasksToDo;
 
@@ -64,12 +70,36 @@ public class TaskList {
         }
     }
 
+    // method implementation from Thingy in WorkRoom app
+    // EFFECTS: returns an unmodifiable list of tasks in this tasks list
+    public List<Task> getTasks() {
+        return Collections.unmodifiableList(tasksToDo);
+    }
+
     // EFFECTS: returns true if list is empty, false otherwise
     public boolean isEmpty() {
         if (tasksToDo.size() == 0) {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("tasksToDo", tasksToDoToJson());
+        return json;
+    }
+
+    // EFFECTS: returns tasks in this task list as a JSON array
+    private JSONArray tasksToDoToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Task t : tasksToDo) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
     }
 }
 

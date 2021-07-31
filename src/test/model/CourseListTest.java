@@ -15,9 +15,9 @@ public class CourseListTest {
     @BeforeEach
     public void runBefore() {
         summer2021 = new CourseList();
-        cs210 = new Course("CS210", 9, 1, "Felix");
-        eng110 = new Course("ENGL110", 12, 3, "Rebecca");
-        cs121 = new Course("CS121", 3, 5, "Bart");
+        cs210 = new Course("CS210", "9:00AM", "1:00PM", "Felix");
+        eng110 = new Course("ENGL110", "12:OOPM", "3:00PM", "Rebecca");
+        cs121 = new Course("CS121", "3:00PM", "5:00PM", "Bart");
     }
 
     @Test

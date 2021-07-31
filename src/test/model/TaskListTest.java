@@ -17,10 +17,10 @@ public class TaskListTest {
     @BeforeEach
     public void runBefore() {
         toDoList = new TaskList();
-        cs210 = new Course("CS210", 9, 1, "Felix");
-        task1 = new Task("1", cs210, false);
-        task2 = new Task("2", cs210, false);
-        task3 = new Task("3", cs210, true);
+        cs210 = new Course("CS210", "9:00AM", "1:00PM", "Felix");
+        task1 = new Task("1", "Monday", false);
+        task2 = new Task("2", "Never", false);
+        task3 = new Task("3", "2 days later", true);
     }
 
     @Test

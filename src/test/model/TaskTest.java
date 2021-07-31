@@ -7,20 +7,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskTest {
 
-    Course cpsc210;
     Task quiz1;
 
     @BeforeEach
     public void runBefore() {
-        cpsc210 = new Course("CPSC210", 9, 1, "Felix");
-        quiz1 = new Task("Quiz 1", cpsc210, false);
+        quiz1 = new Task("", "", false);
         quiz1.setTaskDescription("Basics Quiz");
+        quiz1.setDueDate("Tomorrow");
     }
 
     @Test
     public void testConstructor() {
         assertEquals("Basics Quiz", quiz1.getTaskDescription());
-        assertEquals(cpsc210, quiz1.getCourse());
+        assertEquals("Tomorrow", quiz1.getDueDate());
         assertFalse(quiz1.getStatus());
     }
 
