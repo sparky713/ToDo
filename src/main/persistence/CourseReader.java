@@ -14,11 +14,11 @@ import java.util.stream.Stream;
 // Functionality and methods are implemented from JsonReaderForTasks in JsonSerializationDemo. Link below:
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Represents a reader that reads courseList from JSON data stored in file
-public class JsonReaderForCourses {
+public class CourseReader {
     private String source;
 
     // EFFECTS: constructs reader to read from source file
-    public JsonReaderForCourses(String source) {
+    public CourseReader(String source) {
         this.source = source;
     }
 
@@ -43,7 +43,6 @@ public class JsonReaderForCourses {
 
     // EFFECTS: parses course list from JSON object and returns it
     private CourseList parseCourseList(JSONObject jsonObject) {
-        // TODO  String name = jsonObject.getString("name");
         CourseList cl = new CourseList();
         addCourses(cl, jsonObject);
         return cl;

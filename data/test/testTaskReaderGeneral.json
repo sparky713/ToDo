@@ -1,0 +1,12 @@
+{"tasksToDo": [
+  {
+    "taskDescription": "Lab 7",
+    "dueDate": "Friday",
+    "status": true
+  },
+  {
+    "taskDescription": "Lab 8",
+    "dueDate": "Aug 4",
+    "status": false
+  }
+]}

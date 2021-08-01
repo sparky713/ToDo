@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// test class for CourseList
 public class CourseListTest {
 
     CourseList summer2021;

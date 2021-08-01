@@ -6,10 +6,10 @@ import model.Course;
 import model.CourseList;
 import model.Task;
 import model.TaskList;
-import persistence.JsonReaderForCourses;
-import persistence.JsonReaderForTasks;
-import persistence.JsonWriterForCourses;
-import persistence.JsonWriterForTasks;
+import persistence.CourseReader;
+import persistence.TaskReader;
+import persistence.CourseWriter;
+import persistence.TaskWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,24 +29,24 @@ public class AgendaApp {
     private TaskList completedTasks;
     private CourseList myCourses;
     private Scanner userInput;
-    private JsonWriterForTasks jsonTasksWriter;
-    private JsonWriterForTasks jsonCompletedTasksWriter;
-    private JsonWriterForCourses jsonCoursesWriter;
-    private JsonReaderForTasks jsonTasksReader;
-    private JsonReaderForTasks jsonCompletedTasksReader;
-    private JsonReaderForCourses jsonCoursesReader;
+    private TaskWriter jsonTasksWriter;
+    private TaskWriter jsonCompletedTasksWriter;
+    private CourseWriter jsonCoursesWriter;
+    private TaskReader jsonTasksReader;
+    private TaskReader jsonCompletedTasksReader;
+    private CourseReader jsonCoursesReader;
 
     // EFFECTS: runs the application
     public AgendaApp() throws FileNotFoundException {
         myCourses = new CourseList();
         myTasks = new TaskList();
         completedTasks = new TaskList();
-        jsonTasksWriter = new JsonWriterForTasks(JSON_TASKS);
-        jsonTasksReader = new JsonReaderForTasks(JSON_TASKS);
-        jsonCoursesWriter = new JsonWriterForCourses(JSON_COURSES);
-        jsonCoursesReader = new JsonReaderForCourses(JSON_COURSES);
-        jsonCompletedTasksWriter = new JsonWriterForTasks(JSON_COMPLETED_TASKS);
-        jsonCompletedTasksReader = new JsonReaderForTasks(JSON_COMPLETED_TASKS);
+        jsonTasksWriter = new TaskWriter(JSON_TASKS);
+        jsonTasksReader = new TaskReader(JSON_TASKS);
+        jsonCoursesWriter = new CourseWriter(JSON_COURSES);
+        jsonCoursesReader = new CourseReader(JSON_COURSES);
+        jsonCompletedTasksWriter = new TaskWriter(JSON_COMPLETED_TASKS);
+        jsonCompletedTasksReader = new TaskReader(JSON_COMPLETED_TASKS);
         runProgram();
     }
 
@@ -95,7 +95,7 @@ public class AgendaApp {
         } else if (input.equals("t")) {
             viewTasks();
             nextTaskCommand(input);
-        } else if (input.equals("ct")) { 
+        } else if (input.equals("ct")) {
             viewCompletedTasks();
         } else if (input.equals("st")) {
             saveTasks();
@@ -126,6 +126,8 @@ public class AgendaApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays options to user to add or remove a course and processes the input
     private void nextCourseCommand(String input) {
         System.out.println("\t+ -> add a course");
         System.out.println("\t- -> remove a course");
@@ -140,14 +142,15 @@ public class AgendaApp {
     // MODIFIES: this
     // EFFECTS: adds a course
     private void addCourse() {
+        userInput.nextLine();
         System.out.println("Enter Course Name:");
-        String code = userInput.next();
+        String code = userInput.nextLine();
         System.out.println("Enter Class Starting Time:");
-        String start = userInput.next();
+        String start = userInput.nextLine();
         System.out.println("Enter Class Ending Time:");
-        String end = userInput.next();
+        String end = userInput.nextLine();
         System.out.println("Professor:");
-        String prof = userInput.next();
+        String prof = userInput.nextLine();
         myCourses.addCourse(new Course(code, start, end, prof));
 
         System.out.println("Successfully added " + code + "!");
@@ -160,8 +163,9 @@ public class AgendaApp {
     // MODIFIES: this
     // EFFECTS: removes a course
     private void removeCourse() {
+        userInput.nextLine();
         System.out.println("Enter the course you would like to remove:");
-        String input = userInput.next();
+        String input = userInput.nextLine();
         try {
             Course remove = myCourses.getCourse(input);
             myCourses.removeCourse(remove);
@@ -182,6 +186,8 @@ public class AgendaApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays options to user to add, remove, or complete a task and processes the input
     private void nextTaskCommand(String input) {
         System.out.println("\t+ -> add a task");
         System.out.println("\t- -> remove a task");
@@ -199,10 +205,11 @@ public class AgendaApp {
     // MODIFIES: this
     // EFFECTS: adds a task
     private void addATask() {
+        userInput.nextLine();
         System.out.println("Enter Task Description:");
-        String description = userInput.next();
+        String description = userInput.nextLine();
         System.out.println("When is it due?");
-        String dueDate = userInput.next();
+        String dueDate = userInput.nextLine();
         Task newTask = new Task(description, dueDate, false);
         myTasks.addTask(newTask);
 
@@ -212,8 +219,9 @@ public class AgendaApp {
     // MODIFIES: this
     // EFFECTS: removes a task in the tasks list
     private void removeATask() {
+        userInput.nextLine();
         System.out.println("Enter the task to remove:");
-        String input = userInput.next();
+        String input = userInput.nextLine();
         try {
             Task remove = myTasks.getTask(input);
             myTasks.removeTask(remove);
@@ -227,8 +235,9 @@ public class AgendaApp {
     // MODIFIES: this
     // EFFECTS: completes a task in the tasks list and adds it to the completed tasks list
     private void chooseTaskToComplete() {
+        userInput.nextLine();
         System.out.println("Enter the task you wish to complete:");
-        String complete = userInput.next();
+        String complete = userInput.nextLine();
         try {
             Task toComplete = myTasks.getTask(complete);
             myTasks.completeTask(toComplete);
@@ -245,27 +254,10 @@ public class AgendaApp {
     private void viewCompletedTasks() {
         List<Task> compTasks = completedTasks.getTasks();
 
-        for (Task ct: compTasks) {
+        for (Task ct : compTasks) {
             System.out.println(ct.getTaskDescription() + " (Was Due: " + ct.getDueDate() + ")");
         }
     }
-
-    // EFFECTS: prompts user to choose a list to save to file and saves selected list
-//    private void saveOp(String input) {
-//        String nextCommand;
-//        System.out.println("Select what to save:");
-//        System.out.println("1 -> Tasks");
-//        System.out.println("2 -> Courses");
-//        System.out.println("3 -> Completed Tasks");
-//        nextCommand = userInput.next();
-//        if (nextCommand == "1") {
-//            saveTasks();
-//        } else if (nextCommand == "2") {
-//            saveCourses();
-//        } else if (nextCommand == "3") {
-//            saveCompletedTasks();
-//        }
-//    }
 
     // EFFECTS: saves the task list to file
     private void saveTasks() {
@@ -303,22 +295,6 @@ public class AgendaApp {
         }
     }
 
-    // EFFECTS: prompts user to choose list to load from file and loads it
-//    private void loadOp(String input) {
-//        String nextCommand;
-//        System.out.println("Select what to load:");
-//        System.out.println("1 -> Tasks");
-//        System.out.println("2 -> Courses");
-//        System.out.println("3 -> Completed Tasks");
-//        nextCommand = userInput.next();
-//        if (nextCommand == "1") {
-//            loadTasks();
-//        } else if (nextCommand == "2") {
-//            loadCourses();
-//        } else if (nextCommand == "3") {
-//            loadCompletedTasks();
-//        }
-//    }
 
     // MODIFIES: this
     // EFFECTS: loads tasks from file

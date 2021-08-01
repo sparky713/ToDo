@@ -1,0 +1,14 @@
+{"coursesEnrolled": [
+  {
+    "professor": "Gregor",
+    "code": "CS110",
+    "start": "3:00PM",
+    "end": "4:30PM"
+  },
+  {
+    "professor": "Felix Grund",
+    "code": "CS210",
+    "start": "9:30AM",
+    "end": "1:00PM"
+  }
+]}

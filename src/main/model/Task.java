@@ -30,7 +30,6 @@ public class Task implements Writable {
         return this.dueDate;
     }
 
-
     public boolean getStatus() {
 
         return this.status;

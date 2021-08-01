@@ -14,11 +14,11 @@ import org.json.*;
 // Functionality and methods are implemented from JsonReaderForTasks in JsonSerializationDemo. Link below:
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Represents a reader that reads taskList from JSON data stored in file
-public class JsonReaderForTasks {
+public class TaskReader {
     private String source;
 
     // EFFECTS: constructs reader to read from source file
-    public JsonReaderForTasks(String source) {
+    public TaskReader(String source) {
         this.source = source;
     }
 

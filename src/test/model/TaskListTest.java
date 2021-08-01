@@ -1,10 +1,12 @@
 package model;
 
+import exceptions.TaskNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// test class for TaskList
 public class TaskListTest {
 
     TaskList toDoList;
@@ -48,30 +50,48 @@ public class TaskListTest {
         assertTrue(toDoList.contains(task2));
         assertTrue(toDoList.contains(task3));
     }
-/*
+
     @Test
     public void testGetTaskFound() {
-        toDoList.addTask(task1);
-        toDoList.addTask(task2);
-        toDoList.addTask(task1);
-        toDoList.addTask(task3);
+        try {
+            toDoList.addTask(task1);
+            toDoList.addTask(task2);
+            toDoList.addTask(task1);
+            toDoList.addTask(task3);
 
-        assertEquals(task1, toDoList.getTask("1"));
-        assertEquals(task2, toDoList.getTask("2"));
-        assertEquals(task3, toDoList.getTask("3"));
+            assertEquals(task1, toDoList.getTask("1"));
+            assertEquals(task2, toDoList.getTask("2"));
+            assertEquals(task3, toDoList.getTask("3"));
+
+        } catch (TaskNotFoundException e) {
+            fail("Exception should not have been thrown");
+        }
     }
 
     @Test
     public void testGetTaskNotFound() {
-        toDoList.addTask(task1);
-        toDoList.addTask(task2);
-        toDoList.addTask(task3);
-        assertEquals(task1, toDoList.getTask("1"));
-        assertEquals(task2, toDoList.getTask("2"));
-        assertEquals(task3, toDoList.getTask("3"));
 
-        assertFalse(task1 == toDoList.getTask("2"));
-        assertEquals(null, toDoList.getTask("5"));
+        try {
+            toDoList.addTask(task1);
+            toDoList.addTask(task2);
+            toDoList.addTask(task3);
+
+            assertEquals(task1, toDoList.getTask("1"));
+            assertEquals(task2, toDoList.getTask("2"));
+            assertEquals(task3, toDoList.getTask("3"));
+
+        } catch (TaskNotFoundException e) {
+            fail("Exception should not have been thrown");
+        }
+
+
+        try {
+            Task task = toDoList.getTask("6");
+            fail ("Expected TaskNotFoundException was not thrown");
+        } catch (TaskNotFoundException e) {
+            // good
+        }
+
     }
 
     @Test
@@ -79,13 +99,10 @@ public class TaskListTest {
         toDoList.addTask(task1);
         toDoList.addTask(task2);
         toDoList.addTask(task3);
-        assertEquals(task1, toDoList.getTask("1"));
-        assertEquals(task2, toDoList.getTask("2"));
-        assertEquals(task3, toDoList.getTask("3"));
         assertEquals(3, toDoList.getSize());
 
         toDoList.removeTask(task2);
-        assertEquals(null, toDoList.getTask("2"));
+        assertFalse(toDoList.contains(task2));
         assertEquals(2, toDoList.getSize());
     }
 
@@ -95,16 +112,14 @@ public class TaskListTest {
         toDoList.addTask(task2);
         toDoList.addTask(task3);
         toDoList.addTask(task1);
-        assertEquals(task1, toDoList.getTask("1"));
-        assertEquals(task2, toDoList.getTask("2"));
-        assertEquals(task3, toDoList.getTask("3"));
         assertEquals(4, toDoList.getSize());
 
         toDoList.removeTask(task1);
         toDoList.removeTask(task2);
-        assertEquals(null, toDoList.getTask("2"));
+
+        assertTrue(toDoList.contains(task1));
+        assertFalse(toDoList.contains(task2));
         assertEquals(2, toDoList.getSize());
-        assertEquals(task1, toDoList.getTask("1"));
 
         toDoList.removeTask(task1);
         assertEquals(1, toDoList.getSize());
@@ -118,47 +133,35 @@ public class TaskListTest {
         toDoList.addTask(task1);
         toDoList.addTask(task2);
         toDoList.addTask(task3);
-        assertEquals(task1, toDoList.getTask("1"));
-        assertEquals(task2, toDoList.getTask("2"));
-        assertEquals(task3, toDoList.getTask("3"));
         assertEquals(3, toDoList.getSize());
 
         toDoList.completeTask(task1);
         toDoList.completeTask(task2);
-        assertTrue(toDoList.getTask("1").getStatus());
-        assertTrue(toDoList.getTask("2").getStatus());
+
+        try {
+            assertTrue(toDoList.getTask("1").getStatus());
+        } catch (TaskNotFoundException e) {
+            fail("Exception should not have been thrown");
+        }
+
+        try {
+            assertTrue(toDoList.getTask("2").getStatus());
+        } catch (TaskNotFoundException e) {
+            fail("Exception should not have been thrown");
+        }
     }
 
     @Test
-    public void testContainsTrue() {
+    public void testContains() {
         toDoList.addTask(task1);
         toDoList.addTask(task2);
         toDoList.addTask(task3);
-        assertEquals(3, toDoList.getSize());
+        toDoList.removeTask(task3);
+        assertEquals(2, toDoList.getSize());
         assertTrue(toDoList.contains(task1));
         assertTrue(toDoList.contains(task2));
-        assertTrue(toDoList.contains(task3));
+        assertFalse(toDoList.contains(task3));
     }
-
-    @Test
-    public void testContainsSomeContainsSomeNot() {
-        toDoList.addTask(task1);
-        toDoList.addTask(task2);
-        toDoList.addTask(task3);
-        assertEquals(task1, toDoList.getTask("1"));
-        assertEquals(task2, toDoList.getTask("2"));
-        assertEquals(task3, toDoList.getTask("3"));
-        assertEquals(3, toDoList.getSize());
-        toDoList.removeTask(task1);
-        toDoList.removeTask(task2);
-        assertEquals(1, toDoList.getSize());
-        assertEquals(task3, toDoList.getTask("3"));
-
-        assertFalse(toDoList.contains(task1));
-        assertFalse(toDoList.contains(task2));
-        assertTrue(toDoList.contains(task3));
-    }
-
 
 
     @Test
@@ -181,5 +184,4 @@ public class TaskListTest {
 
     }
 
- */
 }

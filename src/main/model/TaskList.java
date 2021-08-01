@@ -30,7 +30,7 @@ public class TaskList implements Writable {
     // throws TaskNotFoundException if the course is not in the list
     public Task getTask(String task) throws TaskNotFoundException {
         List<String> taskDescriptions = new ArrayList<>();
-        for (Task t: tasksToDo) {
+        for (Task t : tasksToDo) {
             taskDescriptions.add(t.getTaskDescription());
         }
         if (!taskDescriptions.contains(task)) {
@@ -70,7 +70,7 @@ public class TaskList implements Writable {
     //          marks it as completed
     public void completeTask(Task task) {
 
-        for (Task t: tasksToDo) {
+        for (Task t : tasksToDo) {
             if (t == task) {
                 t.setToComplete();
             }

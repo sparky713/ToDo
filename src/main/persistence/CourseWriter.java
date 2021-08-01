@@ -6,9 +6,9 @@ import org.json.JSONObject;
 // Functionality and methods are implemented from JsonWriter. Link below:
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Represents a writer that writes JSON representation of CourseList to file
-public class JsonWriterForCourses extends JsonWriter {
+public class CourseWriter extends JsonWriter {
 
-    public JsonWriterForCourses(String destination) {
+    public CourseWriter(String destination) {
         super(destination);
     }
 

@@ -16,7 +16,6 @@ public class CourseList implements Writable {
 
     // EFFECTS: makes a new empty list of courses
     public CourseList() {
-
         myCourses = new ArrayList<>();
     }
 
@@ -35,7 +34,7 @@ public class CourseList implements Writable {
     // throws CourseNotFoundException if the course is not in the list
     public Course getCourse(String courseCode) throws CourseNotFoundException {
         List<String> courseCodes = new ArrayList<>();
-        for (Course c: myCourses) {
+        for (Course c : myCourses) {
             courseCodes.add(c.getCode());
         }
         if (!courseCodes.contains(courseCode)) {
