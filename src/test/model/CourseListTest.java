@@ -1,7 +1,11 @@
 package model;
 
+import exceptions.CourseNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -101,5 +105,57 @@ public class CourseListTest {
         summer2021.removeCourse(cs210);
 
         assertTrue(summer2021.isEmpty());
+    }
+
+    @Test
+    public void testGetCourseNoExceptionThrown() {
+        summer2021.addCourse(cs210);
+        summer2021.addCourse(eng110);
+        assertTrue(summer2021.contains(cs210));
+        assertTrue(summer2021.contains(eng110));
+        try {
+            assertEquals(eng110, summer2021.getCourse("ENGL110"));
+        } catch (CourseNotFoundException e) {
+            fail ("Exception should not have been thrown");
+        }
+        try {
+            assertEquals(cs210, summer2021.getCourse("CS210"));
+        } catch (CourseNotFoundException e) {
+            fail ("Exception should not have been thrown");
+        }
+    }
+
+    @Test
+    public void testGetCourseExceptionThrown() {
+        summer2021.addCourse(cs210);
+        summer2021.addCourse(eng110);
+        assertTrue(summer2021.contains(cs210));
+        assertTrue(summer2021.contains(eng110));
+        try {
+            summer2021.getCourse("eng110");
+            fail ("Expected CourseNotFoundException was not thrown");
+        } catch (CourseNotFoundException e) {
+            // good
+        }
+        try {
+            summer2021.getCourse("MATH220");
+            fail ("Expected CourseNotFoundException was not thrown");
+        } catch (CourseNotFoundException e) {
+            // good
+        }
+    }
+
+    @Test
+    public void testGetCourses() {
+        summer2021.addCourse(cs210);
+        summer2021.addCourse(eng110);
+        summer2021.addCourse(cs121);
+        assertEquals(3, summer2021.getSize());
+        List<Course> courses = new ArrayList<>();
+        courses.add(cs210);
+        courses.add(eng110);
+        courses.add(cs121);
+        assertEquals(3,courses.size());
+        assertEquals(courses, summer2021.getCourses());
     }
 }

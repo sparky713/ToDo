@@ -1,5 +1,8 @@
 package ui;
 
+import model.Course;
+import model.CourseList;
+
 import java.io.FileNotFoundException;
 
 public class Main {
@@ -10,4 +13,5 @@ public class Main {
             System.out.println("Failed to run application due to file not being found");
         }
     }
+
 }

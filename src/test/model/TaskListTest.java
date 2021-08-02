@@ -4,6 +4,9 @@ import exceptions.TaskNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 // test class for TaskList
@@ -86,12 +89,11 @@ public class TaskListTest {
 
 
         try {
-            Task task = toDoList.getTask("6");
+            assertFalse(task2 == toDoList.getTask("6"));
             fail ("Expected TaskNotFoundException was not thrown");
         } catch (TaskNotFoundException e) {
             // good
         }
-
     }
 
     @Test
@@ -183,5 +185,22 @@ public class TaskListTest {
         assertTrue(toDoList.isEmpty());
 
     }
+
+    @Test
+    public void testGetTasks() {
+        toDoList.addTask(task1);
+        toDoList.addTask(task2);
+        toDoList.addTask(task3);
+        assertEquals(3, toDoList.getSize());
+
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task1);
+        tasks.add(task2);
+        tasks.add(task3);
+        assertEquals(3, tasks.size());
+
+        assertEquals(tasks, toDoList.getTasks());
+    }
+
 
 }
