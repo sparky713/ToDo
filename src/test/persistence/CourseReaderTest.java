@@ -42,6 +42,7 @@ public class CourseReaderTest {
             CourseList cl = cr.read();
             List<Course> courses = cl.getCourses();
             assertEquals(2, courses.size());
+            assertEquals();
             assertEquals("CS110", courses.get(0).getCode());
             assertEquals("Gregor", courses.get(0).getProfessor());
             assertEquals("3:00PM", courses.get(0).getStartTime());

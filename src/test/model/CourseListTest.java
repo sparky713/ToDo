@@ -100,6 +100,9 @@ public class CourseListTest {
         summer2021.addCourse(cs210);
         summer2021.addCourse(eng110);
         summer2021.addCourse(cs121);
+        assertTrue(summer2021.contains(cs210));
+        assertTrue(summer2021.contains(cs121));
+        assertTrue(summer2021.contains(eng110));
         summer2021.removeCourse(cs121);
         summer2021.removeCourse(eng110);
         summer2021.removeCourse(cs210);
@@ -150,6 +153,9 @@ public class CourseListTest {
         summer2021.addCourse(cs210);
         summer2021.addCourse(eng110);
         summer2021.addCourse(cs121);
+        assertTrue(summer2021.contains(cs210));
+        assertTrue(summer2021.contains(cs121));
+        assertTrue(summer2021.contains(eng110));
         assertEquals(3, summer2021.getSize());
         List<Course> courses = new ArrayList<>();
         courses.add(cs210);

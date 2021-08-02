@@ -79,6 +79,8 @@ public class TaskListTest {
             toDoList.addTask(task2);
             toDoList.addTask(task3);
 
+            assertEquals(3, toDoList.getSize());
+
             assertEquals(task1, toDoList.getTask("1"));
             assertEquals(task2, toDoList.getTask("2"));
             assertEquals(task3, toDoList.getTask("3"));
@@ -102,6 +104,9 @@ public class TaskListTest {
         toDoList.addTask(task2);
         toDoList.addTask(task3);
         assertEquals(3, toDoList.getSize());
+        assertTrue(toDoList.contains(task1));
+        assertTrue(toDoList.contains(task2));
+        assertTrue(toDoList.contains(task3));
 
         toDoList.removeTask(task2);
         assertFalse(toDoList.contains(task2));
@@ -114,6 +119,9 @@ public class TaskListTest {
         toDoList.addTask(task2);
         toDoList.addTask(task3);
         toDoList.addTask(task1);
+        assertTrue(toDoList.contains(task1));
+        assertTrue(toDoList.contains(task2));
+        assertTrue(toDoList.contains(task3));
         assertEquals(4, toDoList.getSize());
 
         toDoList.removeTask(task1);
@@ -135,6 +143,9 @@ public class TaskListTest {
         toDoList.addTask(task1);
         toDoList.addTask(task2);
         toDoList.addTask(task3);
+        assertTrue(toDoList.contains(task1));
+        assertTrue(toDoList.contains(task2));
+        assertTrue(toDoList.contains(task3));
         assertEquals(3, toDoList.getSize());
 
         toDoList.completeTask(task1);
@@ -158,6 +169,9 @@ public class TaskListTest {
         toDoList.addTask(task1);
         toDoList.addTask(task2);
         toDoList.addTask(task3);
+        assertTrue(toDoList.contains(task1));
+        assertTrue(toDoList.contains(task2));
+        assertTrue(toDoList.contains(task3));
         toDoList.removeTask(task3);
         assertEquals(2, toDoList.getSize());
         assertTrue(toDoList.contains(task1));
@@ -170,20 +184,25 @@ public class TaskListTest {
     public void testIsEmptyFalse() {
         toDoList.addTask(task2);
         toDoList.addTask(task2);
+        assertTrue(toDoList.contains(task2));
         toDoList.removeTask(task2);
 
         assertFalse(toDoList.isEmpty());
+        assertTrue(toDoList.contains(task2));
     }
 
     @Test
     public void testIsEmptyTrue() {
         toDoList.addTask(task2);
         toDoList.addTask(task1);
+        assertTrue(toDoList.contains(task1));
+        assertTrue(toDoList.contains(task2));
         toDoList.removeTask(task2);
         toDoList.removeTask(task1);
 
         assertTrue(toDoList.isEmpty());
-
+        assertFalse(toDoList.contains(task1));
+        assertFalse(toDoList.contains(task2));
     }
 
     @Test
@@ -191,6 +210,9 @@ public class TaskListTest {
         toDoList.addTask(task1);
         toDoList.addTask(task2);
         toDoList.addTask(task3);
+        assertTrue(toDoList.contains(task1));
+        assertTrue(toDoList.contains(task2));
+        assertTrue(toDoList.contains(task3));
         assertEquals(3, toDoList.getSize());
 
         List<Task> tasks = new ArrayList<>();
