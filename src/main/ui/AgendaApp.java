@@ -124,6 +124,7 @@ public class AgendaApp {
             System.out.println(c.getCode() + " (Starts: " + c.getStartTime() + " Ends: " + c.getEndTime()
                     + " Prof: " + c.getProfessor() + ")");
         }
+        System.out.println(" ");
     }
 
     // MODIFIES: this
@@ -180,10 +181,12 @@ public class AgendaApp {
     // EFFECTS: displays list of tasks in task list
     private void viewTasks() {
         List<Task> tasks = myTasks.getTasks();
+        System.out.println("Your tasks:");
 
         for (Task t : tasks) {
             System.out.println(t.getTaskDescription() + " (Due: " + t.getDueDate() + ")");
         }
+        System.out.println(" ");
     }
 
     // MODIFIES: this
