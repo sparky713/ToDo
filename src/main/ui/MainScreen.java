@@ -37,33 +37,57 @@ public class MainScreen extends JFrame implements ActionListener {
         setLayout(null);
         getContentPane().setBackground(Color.white); // BG COLOR
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        addHeader();
+        addButtons();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and adds a JLabel to main screen
+    public void addHeader() {
         JLabel welcome = new JLabel("WELCOME");
         welcome.setFont(new Font("Header", 1, FONT_SIZE));
         welcome.setBounds(12, 10, 200, 50);
         add(welcome);
-        buttons();
     }
 
     // MODIFIES: this
-    // EFFECTS: creates the view tools, courses, and completed tasks buttons
-    public void buttons() {
-        // COURSES
+    // EFFECTS: creates and adds the view tools, courses, and completed tasks buttons to main screen
+    public void addButtons() {
+        coursesButton();
+        tasksButton();
+        completedTasksButton();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and adds the view courses button to main screen
+    public void coursesButton() {
         viewCourses = new JButton("COURSES");
         viewCourses.setBounds(10, GAP_FROM_TOP, BUTTON, BUTTON);
         viewCourses.setBackground(Color.pink);
         viewCourses.setFocusable(false);
         viewCourses.setActionCommand("View Courses");
         viewCourses.addActionListener(this);
+        viewCourses.setBorder(BorderFactory.createEmptyBorder());
         add(viewCourses);
-        // TASKS
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and adds the view tasks button to main screen
+    public void tasksButton() {
         viewTasks = new JButton("TASKS");
         viewTasks.setBounds(BUTTON + BUTTON_GAP * 2, GAP_FROM_TOP, BUTTON, BUTTON);
         viewTasks.setBackground(Color.orange);
         viewTasks.setFocusable(false);
         viewTasks.setActionCommand("View Tasks");
         viewTasks.addActionListener(this);
+        viewTasks.setBorder(BorderFactory.createEmptyBorder());
         add(viewTasks);
-        // COMPLETED TASKS
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and adds the view completed tasks button to main screen
+    public void completedTasksButton() {
         viewCompletedTasks = new JButton("COMPLETED TASKS");
         viewCompletedTasks.setBounds(10, GAP_FROM_TOP + BUTTON_GAP + BUTTON,
                 BUTTON * 2 + 10, BUTTON);
@@ -71,9 +95,12 @@ public class MainScreen extends JFrame implements ActionListener {
         viewCompletedTasks.setFocusable(false);
         viewCompletedTasks.setActionCommand("View Completed Tasks");
         viewCompletedTasks.addActionListener(this);
+        viewCompletedTasks.setBorder(BorderFactory.createEmptyBorder());
         add(viewCompletedTasks);
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles action event when buttons are clicked
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("View Courses")) {
@@ -83,7 +110,7 @@ public class MainScreen extends JFrame implements ActionListener {
             new TasksPage(tl, cl, ctl);
 
         } else if (e.getActionCommand().equals("View Completed Tasks")) {
-            new CompletedTasksPage(ctl);
+            new CompletedTasksPage(tl, cl, ctl);
         }
     }
 }
