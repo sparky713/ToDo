@@ -20,7 +20,6 @@ public class MainScreen extends JFrame implements ActionListener {
     private JButton viewCourses;
     private JButton viewTasks;
     private JButton viewCompletedTasks;
-    private JFrame frame;
     private TaskList tl;
     private CourseList cl;
     private TaskList ctl;
@@ -29,16 +28,15 @@ public class MainScreen extends JFrame implements ActionListener {
     // EFFECTS: creates JFrame window for the application with buttons and a label
     public MainScreen(TaskList tl, CourseList cl, TaskList ctl) {
         super("My Agenda");
-
         this.tl = tl;
         this.cl = cl;
         this.ctl = ctl;
         setVisible(true);
         setSize(new Dimension(WIDTH, HEIGHT));
-        setResizable(true);
+        setResizable(false);
         setLayout(null);
         getContentPane().setBackground(Color.white); // BG COLOR
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JLabel welcome = new JLabel("WELCOME");
         welcome.setFont(new Font("Header", 1, FONT_SIZE));
         welcome.setBounds(12, 10, 200, 50);
@@ -79,13 +77,11 @@ public class MainScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("View Courses")) {
-            dispose();
-            CoursesPage coursesPage = new CoursesPage();
-            coursesPage.setVisible(true);
+            new CoursesPage(tl, cl, ctl);
 
         } else if (e.getActionCommand().equals("View Tasks")) {
-            // TODO add a tasks page
-            System.out.println("tasks");
+            new TasksPage(tl, cl, ctl);
+
         } else if (e.getActionCommand().equals("View Completed Tasks")) {
             new CompletedTasksPage(ctl);
         }

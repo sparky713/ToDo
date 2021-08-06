@@ -11,7 +11,6 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-           // new MainScreen();
             new AgendaAppGUI();
         } catch (FileNotFoundException e) {
             System.out.println("Failed to run application due to file not being found");

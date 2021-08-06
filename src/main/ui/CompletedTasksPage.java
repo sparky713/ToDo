@@ -16,6 +16,7 @@ public class CompletedTasksPage extends JFrame {
     private JTextArea textArea;
     private JLabel header;
     private TaskList ctl;
+    private Dimension textBox = new Dimension(WIDTH - 70, HEIGHT - 150);
 
     public CompletedTasksPage(TaskList ctl) {
         super("Completed Tasks");
@@ -33,16 +34,16 @@ public class CompletedTasksPage extends JFrame {
         add(header);
         // TEXT AREA
         textArea = new JTextArea();
-        // POSITION
-        JScrollPane scroll = new JScrollPane(textArea);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         textArea.setFont(new Font("completed list", Font.PLAIN, 20));
-        textArea.setBackground(new Color(203, 240, 255));
+        textArea.setBackground(Color.white);
         textArea.setForeground(Color.darkGray);
         textArea.setText(printCompletedTasks());
         textArea.setEditable(false);
+        JScrollPane scroll = new JScrollPane(textArea);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll.setPreferredSize(textBox);
         getContentPane().add(scroll);
-        getContentPane().add(textArea);
         pack();
     }
 

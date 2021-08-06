@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CoursesPage extends JFrame implements ActionListener {
+public class TasksPage extends JFrame implements ActionListener {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 650;
     private static final int FONT_SIZE = 30;
@@ -22,13 +22,12 @@ public class CoursesPage extends JFrame implements ActionListener {
     private CourseList cl;
     private TaskList ctl;
 
-    public CoursesPage(TaskList tl, CourseList cl, TaskList ctl) {
+    public TasksPage(TaskList tl, CourseList cl, TaskList ctl) {
         this.tl = tl;
         this.cl = cl;
         this.ctl = ctl;
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane);
         splitPane.setDividerLocation(350);
-        rightPane.setLayout(new BorderLayout());
         add(splitPane);
         setVisible(true);
         setResizable(false);
@@ -47,15 +46,16 @@ public class CoursesPage extends JFrame implements ActionListener {
         home.setFocusable(false);
         home.setActionCommand("Go back to main page");
         home.addActionListener(this);
-        rightPane.add(home,BorderLayout.PAGE_END);
+        rightPane.add(home);
     }
 
     private void createHeader() {
-        header = new JLabel("COURSES");
+        header = new JLabel("TASKS");
         header.setFont(new Font("header",1,FONT_SIZE));
         header.setBounds(10, 10, 50, 50);
         add(header);
     }
+
 
 
     @Override
@@ -66,7 +66,3 @@ public class CoursesPage extends JFrame implements ActionListener {
         }
     }
 }
-
-
-
-
