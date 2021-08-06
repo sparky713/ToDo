@@ -7,8 +7,8 @@ import model.CourseList;
 import model.Task;
 import model.TaskList;
 import persistence.CourseReader;
-import persistence.TaskReader;
 import persistence.CourseWriter;
+import persistence.TaskReader;
 import persistence.TaskWriter;
 
 import java.io.FileNotFoundException;
@@ -16,13 +16,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-// UI Functionality and methods are implemented from Teller App and JsonSerializationDemo WorkRoomApp. Links below:
-// https://github.students.cs.ubc.ca/CPSC210/TellerAppNotRobust/blob/c0c6a26c7e1625de943cd7ac6d4772eda9326239/src/main
-// /ca/ubc/cpsc210/bank/model/Account.java#L11
-// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-// Course tasks application
-public class AgendaApp {
-    /*
+public class AgendaAppGUI {
+
     private static final String JSON_TASKS = "./data/tasks.json";
     private static final String JSON_COURSES = "./data/courses.json";
     private static final String JSON_COMPLETED_TASKS = "./data/completed.json";
@@ -39,7 +34,7 @@ public class AgendaApp {
     private CompletedTasksPage ctp;
 
     // EFFECTS: runs the application
-    public AgendaApp() throws FileNotFoundException {
+    public AgendaAppGUI() throws FileNotFoundException {
         myCourses = new CourseList();
         myTasks = new TaskList();
         completedTasks = new TaskList();
@@ -49,6 +44,9 @@ public class AgendaApp {
         jsonCoursesReader = new CourseReader(JSON_COURSES);
         jsonCompletedTasksWriter = new TaskWriter(JSON_COMPLETED_TASKS);
         jsonCompletedTasksReader = new TaskReader(JSON_COMPLETED_TASKS);
+        loadCourses();
+        loadTasks();
+        loadCompletedTasks();
         runProgram();
     }
 
@@ -56,6 +54,7 @@ public class AgendaApp {
     // MODIFIES: this
     // EFFECTS: processes the users inputs
     private void runProgram() {
+        new MainScreen(myTasks, myCourses, completedTasks);
         userInput = new Scanner(System.in);
         boolean running = true;
         String input;
@@ -82,9 +81,6 @@ public class AgendaApp {
         System.out.println("\tst -> save tasks to file");
         System.out.println("\tsc -> save courses to file");
         System.out.println("\tsct -> save completed tasks to file");
-        System.out.println("\tlt -> load tasks from file");
-        System.out.println("\tlc -> load courses from file");
-        System.out.println("\tlct -> load completed tasks from file");
         System.out.println("\tq -> quit application");
     }
 
@@ -105,12 +101,6 @@ public class AgendaApp {
             saveCourses();
         } else if (input.equals("sct")) {
             saveCompletedTasks();
-        } else if (input.equals("lt")) {
-            loadTasks();
-        } else if (input.equals("lc")) {
-            loadCourses();
-        } else if (input.equals("lct")) {
-            loadCompletedTasks();
         } else {
             System.out.println("Option not found, please select again.");
         }
@@ -333,6 +323,8 @@ public class AgendaApp {
             System.out.println("Unable to retrieve from file: " + JSON_COMPLETED_TASKS);
         }
     }
-*/
+
 }
+
+
 

@@ -91,6 +91,7 @@ public class CourseList implements Writable {
 
         return jsonArray;
     }
+
 }
 
 
