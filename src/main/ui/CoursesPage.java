@@ -9,8 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
+// represents the courses page
 public class CoursesPage extends JFrame implements ActionListener {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 650;
@@ -24,8 +27,6 @@ public class CoursesPage extends JFrame implements ActionListener {
     private JTextField addETime;
     private JTextField addProf;
     private JButton home;
-    private JButton addCourse;
-    private JButton removeCourse;
     private JSplitPane splitPane;
     private JScrollPane leftPane = new JScrollPane();
     private JTextArea leftTextArea;
@@ -33,6 +34,7 @@ public class CoursesPage extends JFrame implements ActionListener {
     private TaskList tl;
     private CourseList cl;
     private TaskList ctl;
+    private SoundEffect se;
 
     public CoursesPage(TaskList tl, CourseList cl, TaskList ctl) {
         this.tl = tl;
@@ -48,7 +50,6 @@ public class CoursesPage extends JFrame implements ActionListener {
         setResizable(false);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        getContentPane().setBackground(new Color(255, 209, 209));
         pack();
     }
 
@@ -83,10 +84,11 @@ public class CoursesPage extends JFrame implements ActionListener {
     }
 
     private void addCourseMenu() {
-        addName = new JTextField(10);
-        addSTime = new JTextField(5);
-        addETime = new JTextField(5);
-        addProf = new JTextField(10);
+        addName = new JTextField("enter course", 10);
+        addSTime = new JTextField("start time", 5);
+        addETime = new JTextField("end time", 5);
+        addProf = new JTextField("professor", 10);
+        mouseHandlerForAdd();
         JButton confirmAdd = new JButton("Add");
         confirmAdd.setActionCommand("add item");
         confirmAdd.addActionListener(this);
@@ -99,8 +101,73 @@ public class CoursesPage extends JFrame implements ActionListener {
         pack();
     }
 
+    private void addNameME() {
+        addName.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                super.mouseClicked(me);
+                if (addName.getText().equalsIgnoreCase("enter course")) {
+                    addName.setText("");
+                }
+            }
+        });
+    }
+
+    private void addSTimeME() {
+        addSTime.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                super.mouseClicked(me);
+                if (addSTime.getText().equalsIgnoreCase("start time")) {
+                    addSTime.setText("");
+                }
+            }
+        });
+    }
+
+    private void addETimeME() {
+        addETime.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                super.mouseClicked(me);
+                if (addETime.getText().equalsIgnoreCase("end time")) {
+                    addETime.setText("");
+                }
+            }
+        });
+    }
+
+    private void addProfME() {
+        addProf.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                super.mouseClicked(me);
+                if (addProf.getText().equalsIgnoreCase("professor")) {
+                    addProf.setText("");
+                }
+            }
+        });
+    }
+
+    private void mouseHandlerForAdd() {
+        addNameME();
+        addSTimeME();
+        addETimeME();
+        addProfME();
+    }
+
+
     private void removeCourseMenu() {
-        remove = new JTextField(10);
+        remove = new JTextField("enter course", 10);
+        remove.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                super.mouseClicked(me);
+                if (remove.getText().equalsIgnoreCase("enter course")) {
+                    remove.setText("");
+                }
+            }
+        });
         JButton confirmDelete = new JButton("Delete");
         confirmDelete.setActionCommand("delete item");
         confirmDelete.addActionListener(this);
@@ -120,9 +187,8 @@ public class CoursesPage extends JFrame implements ActionListener {
     }
 
     private void createHeader() {
-        header = new JLabel("COURSES");
-        header.setFont(new Font("header",1,FONT_SIZE));
-        //header.setBounds(15, 5, 50, 50);
+        header = new JLabel("MY COURSES");
+        header.setFont(new Font("header", 1, FONT_SIZE));
         add(header);
     }
 
@@ -138,28 +204,51 @@ public class CoursesPage extends JFrame implements ActionListener {
         return "\n \n" + courses;
     }
 
+    public void resetTextField() {
+        addName.setText("enter course");
+        addSTime.setText("start time");
+        addETime.setText("end time");
+        addProf.setText("professor");
+    }
+
+    // Audio is downloaded from: https://www.youtube.com/watch?v=h6_8SlZZwvQ&ab_channel=ChristopherHuppertz
+    public void addHelper() {
+        cl.addCourse(new Course(addName.getText(), addSTime.getText(), addETime.getText(), addProf.getText()));
+        se = new SoundEffect();
+        String completeSound = "./data/sound/Click.wav";
+        se.setFile(completeSound);
+        se.playSound();
+        repaint();
+        leftTextArea.setText(printCourses());
+        resetTextField();
+    }
+
+    // Audio is downloaded from: https://www.youtube.com/watch?v=LIgwJQo8IuA&ab_channel=SoundLibrary
+    public void deleteHelper() {
+        se = new SoundEffect();
+        String completeSound = "./data/sound/Delete.wav";
+        try {
+            cl.removeCourse(cl.getCourse(remove.getText()));
+        } catch (CourseNotFoundException courseNotFoundException) {
+            courseNotFoundException.printStackTrace();
+        }
+        se.setFile(completeSound);
+        se.playSound();
+        repaint();
+        leftTextArea.setText(printCourses());
+        remove.setText("enter course");
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Go back to main page")) {
             dispose();
-            new MainScreen(tl, cl, ctl);
+
         } else if (e.getActionCommand().equals("add item")) {
-            cl.addCourse(new Course(addName.getText(), addSTime.getText(), addETime.getText(), addProf.getText()));
-            repaint();
-            leftTextArea.setText(printCourses());
-            addName.setText("");
-            addSTime.setText("");
-            addETime.setText("");
-            addProf.setText("");
+            addHelper();
+
         } else if (e.getActionCommand().equals("delete item")) {
-            try {
-                cl.removeCourse(cl.getCourse(remove.getText()));
-            } catch (CourseNotFoundException courseNotFoundException) {
-                courseNotFoundException.printStackTrace();
-            }
-            repaint();
-            leftTextArea.setText(printCourses());
-            remove.setText("");
+            deleteHelper();
         }
     }
 }

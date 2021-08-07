@@ -1,40 +1,91 @@
 package ui;
 
-import exceptions.CourseNotFoundException;
-import exceptions.TaskNotFoundException;
-import model.Course;
 import model.CourseList;
-import model.Task;
 import model.TaskList;
 import persistence.CourseReader;
 import persistence.CourseWriter;
 import persistence.TaskReader;
 import persistence.TaskWriter;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
-public class AgendaAppGUI {
+public class AgendaAppGUI extends JFrame implements ActionListener {
 
     private static final String JSON_TASKS = "./data/tasks.json";
     private static final String JSON_COURSES = "./data/courses.json";
     private static final String JSON_COMPLETED_TASKS = "./data/completed.json";
+    private static final int WIDTH = 400;
+    private static final int HEIGHT = 650;
+    private static int BUTTON = WIDTH / 2 - 20;
+    private static int GAP_FROM_TOP = 70;
+    private static int BUTTON_GAP = 10;
+    private static final int FONT_SIZE = 30;
+
+
+    private JButton viewCourses;
+    private JButton viewTasks;
+    private JButton viewCompletedTasks;
+    private JButton viewStatus;
+    private JButton save;
+    private JLabel welcome;
     private TaskList myTasks;
     private TaskList completedTasks;
     private CourseList myCourses;
-    private Scanner userInput;
     private TaskWriter jsonTasksWriter;
     private TaskWriter jsonCompletedTasksWriter;
     private CourseWriter jsonCoursesWriter;
     private TaskReader jsonTasksReader;
     private TaskReader jsonCompletedTasksReader;
     private CourseReader jsonCoursesReader;
-    private CompletedTasksPage ctp;
+    private DateTimeFormatter loadTimeFormat;
+    private LocalDateTime loadLocalTime;
+    private String loadTime;
+    private DateTimeFormatter saveTimeFormat;
+    private LocalDateTime saveLocalTime;
+    private String saveTime;
 
-    // EFFECTS: runs the application
+    // MODIFIES: this
+    // EFFECTS: runs the application and creates JFrame window for the application with buttons and a label
     public AgendaAppGUI() throws FileNotFoundException {
+        super("My Agenda");
+        initialize();
+        loadData();
+        saveLoadTime();
+        setVisible(true);
+        setSize(new Dimension(WIDTH, HEIGHT));
+        setResizable(false);
+        setLayout(null);
+        getContentPane().setBackground(Color.white); // BG COLOR
+
+        addHeader();
+        addButtons();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads my courses, tasks, and completed tasks
+    public void loadData() {
+        loadCourses();
+        loadTasks();
+        loadCompletedTasks();
+    }
+
+    // EFFECTS: saves the time application was opened/when data is loaded from file
+    public void saveLoadTime() {
+        loadTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss");
+        loadLocalTime = LocalDateTime.now();
+        loadTime = loadTimeFormat.format(loadLocalTime);
+    }
+
+    // EFFECTS: initializes lists, JSon readers and writers
+    public void initialize() {
         myCourses = new CourseList();
         myTasks = new TaskList();
         completedTasks = new TaskList();
@@ -44,215 +95,124 @@ public class AgendaAppGUI {
         jsonCoursesReader = new CourseReader(JSON_COURSES);
         jsonCompletedTasksWriter = new TaskWriter(JSON_COMPLETED_TASKS);
         jsonCompletedTasksReader = new TaskReader(JSON_COMPLETED_TASKS);
-        loadCourses();
-        loadTasks();
-        loadCompletedTasks();
-        runProgram();
-    }
-
-
-    // MODIFIES: this
-    // EFFECTS: processes the users inputs
-    private void runProgram() {
-        new MainScreen(myTasks, myCourses, completedTasks);
-        userInput = new Scanner(System.in);
-        boolean running = true;
-        String input;
-
-        while (running) {
-            displaysOptions();
-            input = userInput.next();
-
-            if (input.equals("q")) {
-                running = false;
-            } else {
-                processUserInput(input);
-            }
-        }
-        System.out.println("See you again!");
-    }
-
-    // EFFECTS: displays the menu of options to the user
-    private void displaysOptions() {
-        System.out.println("\nChoose an option:");
-        System.out.println("\tc -> view courses");
-        System.out.println("\tt -> view tasks");
-        System.out.println("\tct -> view completed tasks");
-        System.out.println("\tst -> save tasks to file");
-        System.out.println("\tsc -> save courses to file");
-        System.out.println("\tsct -> save completed tasks to file");
-        System.out.println("\tq -> quit application");
     }
 
     // MODIFIES: this
-    // EFFECTS: processes the user's input
-    private void processUserInput(String input) {
-        if (input.equals("c")) {
-            displayCourses();
-            nextCourseCommand(input);
-        } else if (input.equals("t")) {
-            viewTasks();
-            nextTaskCommand(input);
-        } else if (input.equals("ct")) {
-            viewCompletedTasks();
-        } else if (input.equals("st")) {
-            saveTasks();
-        } else if (input.equals("sc")) {
+    // EFFECTS: creates and adds a JLabel to main screen
+    public void addHeader() {
+        welcome = new JLabel("WELCOME");
+        welcome.setFont(new Font("Header", 1, FONT_SIZE));
+        welcome.setBounds(12, 10, 200, 50);
+        add(welcome);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and adds the save, check loading status, view tools, courses, and completed tasks
+    // buttons to main screen
+    public void addButtons() {
+        coursesButton();
+        tasksButton();
+        completedTasksButton();
+        saveButton();
+        loadingStatusButton();
+    }
+
+    public void saveButton() {
+        save = new JButton("SAVE CHANGES");
+        save.setBounds(10, HEIGHT - 75, BUTTON - 30, 30);
+        save.setFocusable(false);
+        save.setActionCommand("Save");
+        save.addActionListener(this);
+        save.setBorder(BorderFactory.createRaisedBevelBorder());
+        add(save);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates a button to open the loading status page
+    public void loadingStatusButton() {
+        viewStatus = new JButton("LOADING STATUS");
+        viewStatus.setBounds(WIDTH - (BUTTON - 10), HEIGHT - 75,
+                BUTTON - 30, 30);
+        viewStatus.setFocusable(false);
+        viewStatus.setActionCommand("View Status");
+        viewStatus.addActionListener(this);
+        viewStatus.setBorder(BorderFactory.createRaisedBevelBorder());
+        add(viewStatus);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and adds the view courses button to main screen
+    public void coursesButton() {
+        viewCourses = new JButton("COURSES");
+        viewCourses.setBounds(10, GAP_FROM_TOP, BUTTON, BUTTON);
+        viewCourses.setBackground(Color.pink);
+        viewCourses.setFocusable(false);
+        viewCourses.setActionCommand("View Courses");
+        viewCourses.addActionListener(this);
+        viewCourses.setBorder(BorderFactory.createRaisedBevelBorder());
+        add(viewCourses);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and adds the view tasks button to main screen
+    public void tasksButton() {
+        viewTasks = new JButton("TASKS");
+        viewTasks.setBounds(BUTTON + BUTTON_GAP * 2, GAP_FROM_TOP, BUTTON, BUTTON);
+        viewTasks.setBackground(Color.orange);
+        viewTasks.setFocusable(false);
+        viewTasks.setActionCommand("View Tasks");
+        viewTasks.addActionListener(this);
+        viewTasks.setBorder(BorderFactory.createRaisedBevelBorder());
+        add(viewTasks);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates and adds the view completed tasks button to main screen
+    public void completedTasksButton() {
+        viewCompletedTasks = new JButton("COMPLETED TASKS");
+        viewCompletedTasks.setBounds(10, GAP_FROM_TOP + BUTTON_GAP + BUTTON,
+                BUTTON * 2 + 10, BUTTON);
+        viewCompletedTasks.setBackground(new Color(137, 207, 240));
+        viewCompletedTasks.setFocusable(false);
+        viewCompletedTasks.setActionCommand("View Completed Tasks");
+        viewCompletedTasks.addActionListener(this);
+        viewCompletedTasks.setBorder(BorderFactory.createRaisedBevelBorder());
+        add(viewCompletedTasks);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: handles action event when buttons are clicked
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("View Courses")) {
+            new CoursesPage(myTasks, myCourses, completedTasks);
+
+        } else if (e.getActionCommand().equals("View Tasks")) {
+            new TasksPage(myTasks, myCourses, completedTasks);
+
+        } else if (e.getActionCommand().equals("View Completed Tasks")) {
+            new CompletedTasksPage(myTasks, myCourses, completedTasks);
+
+        } else if (e.getActionCommand().equals("View Status")) {
+            new StatusPage(loadTime);
+
+        } else if (e.getActionCommand().equals("Save")) {
             saveCourses();
-        } else if (input.equals("sct")) {
+            saveTasks();
             saveCompletedTasks();
-        } else {
-            System.out.println("Option not found, please select again.");
+            saveSavedTime();
+            JOptionPane.showMessageDialog(this,
+                    "Saved Changes at: " + saveTime);
         }
     }
 
-
-    // EFFECTS: displays the courses in the course list
-    private void displayCourses() {
-        List<Course> courses = myCourses.getCourses();
-        System.out.println("\nYour current courses:");
-
-        for (Course c : courses) {
-            System.out.println(c.getCode() + " (Starts: " + c.getStartTime() + " Ends: " + c.getEndTime()
-                    + " Prof: " + c.getProfessor() + ")");
-        }
-        System.out.println(" ");
+    // EFFECTS: stores the time at which the save button is clicked as a String
+    public void saveSavedTime() {
+        saveTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss");
+        saveLocalTime = LocalDateTime.now();
+        saveTime = saveTimeFormat.format(saveLocalTime);
     }
 
-    // MODIFIES: this
-    // EFFECTS: displays options to user to add or remove a course and processes the input
-    private void nextCourseCommand(String input) {
-        System.out.println("\t+ -> add a course");
-        System.out.println("\t- -> remove a course");
-        String nextCommand = userInput.next();
-        if (nextCommand.equals("+")) {
-            addCourse();
-        } else if (nextCommand.equals("-")) {
-            removeCourse();
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds a course
-    private void addCourse() {
-        userInput.nextLine();
-        System.out.println("Enter Course Name:");
-        String code = userInput.nextLine();
-        System.out.println("Enter Class Starting Time:");
-        String start = userInput.nextLine();
-        System.out.println("Enter Class Ending Time:");
-        String end = userInput.nextLine();
-        System.out.println("Professor:");
-        String prof = userInput.nextLine();
-        myCourses.addCourse(new Course(code, start, end, prof));
-
-        System.out.println("Successfully added " + code + "!");
-        System.out.println("Class starts at " + start + " and ends at " + end);
-        System.out.println(code + " Professor: " + prof);
-
-    }
-
-    // REQUIRES: list containing courses is not empty
-    // MODIFIES: this
-    // EFFECTS: removes a course
-    private void removeCourse() {
-        userInput.nextLine();
-        System.out.println("Enter the course you would like to remove:");
-        String input = userInput.nextLine();
-        try {
-            Course remove = myCourses.getCourse(input);
-            myCourses.removeCourse(remove);
-            System.out.println("Successfully removed " + input);
-        } catch (CourseNotFoundException e) {
-            e.printStackTrace();
-            System.out.println(input + " was not found in your courses.");
-        }
-
-    }
-
-    // EFFECTS: displays list of tasks in task list
-    private void viewTasks() {
-        List<Task> tasks = myTasks.getTasks();
-        System.out.println("Your tasks:");
-
-        for (Task t : tasks) {
-            System.out.println(t.getTaskDescription() + " (Due: " + t.getDueDate() + ")");
-        }
-        System.out.println(" ");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: displays options to user to add, remove, or complete a task and processes the input
-    private void nextTaskCommand(String input) {
-        System.out.println("\t+ -> add a task");
-        System.out.println("\t- -> remove a task");
-        System.out.println("\tcomplete -> complete a task");
-        String nextCommand = userInput.next();
-        if (nextCommand.equals("+")) {
-            addATask();
-        } else if (nextCommand.equals("-")) {
-            removeATask();
-        } else if (nextCommand.equals("complete")) {
-            chooseTaskToComplete();
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds a task
-    private void addATask() {
-        userInput.nextLine();
-        System.out.println("Enter Task Description:");
-        String description = userInput.nextLine();
-        System.out.println("When is it due?");
-        String dueDate = userInput.nextLine();
-        Task newTask = new Task(description, dueDate, false);
-        myTasks.addTask(newTask);
-
-        System.out.println("Successfully added " + description + "!");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: removes a task in the tasks list
-    private void removeATask() {
-        userInput.nextLine();
-        System.out.println("Enter the task to remove:");
-        String input = userInput.nextLine();
-        try {
-            Task remove = myTasks.getTask(input);
-            myTasks.removeTask(remove);
-            System.out.println("Removed task: " + input);
-        } catch (TaskNotFoundException e) {
-            e.printStackTrace();
-            System.out.println(input + " was not found in your tasks.");
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: completes a task in the tasks list and adds it to the completed tasks list
-    private void chooseTaskToComplete() {
-        userInput.nextLine();
-        System.out.println("Enter the task you wish to complete:");
-        String complete = userInput.nextLine();
-        try {
-            Task toComplete = myTasks.getTask(complete);
-            myTasks.completeTask(toComplete);
-            completedTasks.addTask(toComplete);
-            myTasks.removeTask(toComplete);
-            System.out.println("Completed task: " + toComplete.getTaskDescription());
-        } catch (TaskNotFoundException e) {
-            e.printStackTrace();
-            System.out.println(complete + " was not found in your tasks.");
-        }
-    }
-
-    // EFFECTS: displays tasks in the completed tasks list with their description and due date
-    private void viewCompletedTasks() {
-        List<Task> compTasks = completedTasks.getTasks();
-
-        for (Task ct : compTasks) {
-            System.out.println(ct.getTaskDescription() + " (Was Due: " + ct.getDueDate() + ")");
-        }
-    }
 
     // EFFECTS: saves the task list to file
     private void saveTasks() {

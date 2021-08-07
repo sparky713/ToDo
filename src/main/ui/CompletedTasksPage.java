@@ -8,9 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
+// represents the completed tasks page, a page with a list of the completed tasks
 public class CompletedTasksPage extends JFrame implements ActionListener {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 650;
@@ -26,19 +26,19 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
 
     public CompletedTasksPage(TaskList tl, CourseList cl, TaskList ctl) {
         super("Completed Tasks");
-        this.ctl = new TaskList();
         this.ctl = ctl;
+        this.cl = cl;
+        this.tl = tl;
         getContentPane().setBackground(new Color(203, 240, 255));
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         setVisible(true);
-        createHomeButton();
         createHeader();
-        // TEXT AREA
         setUpTextArea();
         setUpScrollPane();
+        createHomeButton();
         pack();
     }
 
@@ -70,7 +70,7 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
         home.setFocusable(false);
         home.setActionCommand("Go back to main page");
         home.addActionListener(this);
-        //home.setBounds(WIDTH - 50,HEIGHT - 30, 35, 10);
+        home.setBounds(WIDTH - 50,HEIGHT - 30, 35, 10);
         add(home);
     }
 
@@ -89,7 +89,6 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Go back to main page")) {
             dispose();
-            new MainScreen(tl, cl, ctl);
         }
     }
 }
