@@ -18,12 +18,14 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
 
     private JTextArea textArea;
     private JLabel header;
+    private JScrollPane scroll;
     private TaskList tl;
     private CourseList cl;
     private TaskList ctl;
     private Dimension textBox = new Dimension(WIDTH - 70, HEIGHT - 150);
     private JButton home;
 
+    // EFFECTS: constructs a new CompletedTasksPage with a JTextArea and additional features
     public CompletedTasksPage(TaskList tl, CourseList cl, TaskList ctl) {
         super("Completed Tasks");
         this.ctl = ctl;
@@ -42,6 +44,7 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
         pack();
     }
 
+    // EFFECTS: sets the text, its font, and color for the non editable text area
     public void setUpTextArea() {
         textArea = new JTextArea();
         textArea.setFont(new Font("completed list", Font.PLAIN, 20));
@@ -51,20 +54,27 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
         textArea.setEditable(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a scroll pane, adds JTextArea, textBox, to scroll pane and adds the scroll pane
+    // to this
     public void setUpScrollPane() {
-        JScrollPane scroll = new JScrollPane(textArea);
+        scroll = new JScrollPane(textArea);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setPreferredSize(textBox);
         getContentPane().add(scroll);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and adds the header for the completed tasks page
     public void createHeader() {
         header = new JLabel("COMPLETED TASKS");
         header.setFont(new Font("header", 1, FONT));
         add(header);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and adds the button to return to the main page on the completed tasks page
     public void createHomeButton() {
         home = new JButton("Home");
         home.setFocusable(false);
@@ -74,6 +84,7 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
         add(home);
     }
 
+    // EFFECTS: returns a string of all tasks in the completed tasks list with their due dates in brackets
     public String printCompletedTasks() {
         List<Task> completedList = ctl.getTasks();
         String completedTasks = "";
@@ -82,9 +93,11 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
             completedTasks += "- " + c.getTaskDescription() + "   (Was Due: " + c.getDueDate() + ") \n";
         }
 
-        return "\n" + completedTasks;
+        return completedTasks;
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles events for the home button
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Go back to main page")) {

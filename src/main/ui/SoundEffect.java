@@ -5,6 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
+// a helper class for sound effects
 public class SoundEffect {
 
     private Clip effect;

@@ -2,6 +2,7 @@ package ui;
 
 import java.io.FileNotFoundException;
 
+// Main Class to start the application
 public class Main {
 
     public static void main(String[] args) {

@@ -2,11 +2,6 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributes;
 
 // contains and represents data related to the state of persistence of the AgendaApp
 public class StatusPage extends JFrame {

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
+// Agenda Application
 public class AgendaAppGUI extends JFrame implements ActionListener {
 
     private static final String JSON_TASKS = "./data/tasks.json";
@@ -98,7 +99,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates and adds a JLabel to main screen
+    // EFFECTS: creates and adds a JLabel to the JFrame
     public void addHeader() {
         welcome = new JLabel("WELCOME");
         welcome.setFont(new Font("Header", 1, FONT_SIZE));
@@ -117,6 +118,8 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
         loadingStatusButton();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and adds a save button to the main page that saves all changes to file
     public void saveButton() {
         save = new JButton("SAVE CHANGES");
         save.setBounds(10, HEIGHT - 75, BUTTON - 30, 30);
@@ -149,7 +152,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
         viewCourses.setFocusable(false);
         viewCourses.setActionCommand("View Courses");
         viewCourses.addActionListener(this);
-        viewCourses.setBorder(BorderFactory.createRaisedBevelBorder());
+        viewCourses.setBorder(BorderFactory.createEmptyBorder());
         add(viewCourses);
     }
 
@@ -162,7 +165,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
         viewTasks.setFocusable(false);
         viewTasks.setActionCommand("View Tasks");
         viewTasks.addActionListener(this);
-        viewTasks.setBorder(BorderFactory.createRaisedBevelBorder());
+        viewTasks.setBorder(BorderFactory.createEmptyBorder());
         add(viewTasks);
     }
 
@@ -176,7 +179,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
         viewCompletedTasks.setFocusable(false);
         viewCompletedTasks.setActionCommand("View Completed Tasks");
         viewCompletedTasks.addActionListener(this);
-        viewCompletedTasks.setBorder(BorderFactory.createRaisedBevelBorder());
+        viewCompletedTasks.setBorder(BorderFactory.createEmptyBorder());
         add(viewCompletedTasks);
     }
 
