@@ -70,7 +70,7 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
         home.setFocusable(false);
         home.setActionCommand("Go back to main page");
         home.addActionListener(this);
-        home.setBounds(WIDTH - 50,HEIGHT - 30, 35, 10);
+        home.setBounds(WIDTH - 50, HEIGHT - 30, 35, 10);
         add(home);
     }
 
