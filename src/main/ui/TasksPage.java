@@ -1,12 +1,9 @@
 package ui;
 
-import exceptions.CourseNotFoundException;
 import exceptions.TaskNotFoundException;
 import model.CourseList;
 import model.Task;
 import model.TaskList;
-
-import javax.sound.sampled.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +18,14 @@ public class TasksPage extends JFrame implements ActionListener {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 650;
     private static final int FONT_SIZE = 30;
+    private static final int SUB_FONT = 15;
     private static final int DIVIDER_POSITION = 380;
+    private static final int RIGHT_PANE_WIDTH = 50;
+    private static final int RIGHT_PANE_HEIGHT = 650;
+    private static final int BUTTON_X_POS = RIGHT_PANE_WIDTH / 3 + 7;
 
     private JLabel header;
+    private JLabel addTaskHeader;
     private JTextField addDescription;
     private JTextField addDueDate;
     private JTextField removeTask;
@@ -37,6 +39,8 @@ public class TasksPage extends JFrame implements ActionListener {
     private CourseList cl;
     private TaskList ctl;
     private SoundEffect se;
+    private JLabel removeTaskHeader;
+    private JLabel completeTaskHeader;
 
     public TasksPage(TaskList tl, CourseList cl, TaskList ctl) {
         super("My Tasks");
@@ -70,7 +74,7 @@ public class TasksPage extends JFrame implements ActionListener {
     }
 
     public void setUpRightPane() {
-        rightPane.setLayout(new FlowLayout());
+        rightPane.setLayout(null);
         rightPane.setBackground(new Color(245, 204, 144));
     }
 
@@ -87,10 +91,11 @@ public class TasksPage extends JFrame implements ActionListener {
     }
 
     private void addTaskMenu() {
-        addDescription = new JTextField("enter task", 10);
-        addDueDate = new JTextField("due date", 5);
+        makeTextFields();
         mouseHandlerForAdd();
         JButton confirmAdd = new JButton("Add");
+        confirmAdd.setBounds(BUTTON_X_POS, 115, 150, 30);
+        confirmAdd.setBackground(Color.white);
         confirmAdd.setActionCommand("add item");
         confirmAdd.addActionListener(this);
         confirmAdd.setFocusable(false);
@@ -98,6 +103,17 @@ public class TasksPage extends JFrame implements ActionListener {
         rightPane.add(addDueDate);
         rightPane.add(confirmAdd);
         pack();
+    }
+
+    private void makeTextFields() {
+        addDescription = new JTextField("enter task");
+        addDescription.setBounds(BUTTON_X_POS, 50, 150, 25);
+        addDueDate = new JTextField("due date");
+        addDueDate.setBounds(37, 80, 120, 25);
+        removeTask = new JTextField("enter task", 10);
+        removeTask.setBounds(BUTTON_X_POS, 190, 150, 25);
+        completeTask = new JTextField("enter task", 10);
+        completeTask.setBounds(BUTTON_X_POS, 300, 150, 25);
     }
 
     private void mouseHandlerForAdd() {
@@ -122,17 +138,20 @@ public class TasksPage extends JFrame implements ActionListener {
     }
 
     private void removeTaskMenu() {
-        removeTask = new JTextField("enter task", 10);
+        makeTextFields();
         removeTask.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 super.mouseClicked(me);
                 if (removeTask.getText().equalsIgnoreCase("enter task")) {
                     removeTask.setText("");
+                    removeTask.repaint();
                 }
             }
         });
         JButton confirmDelete = new JButton("Delete");
+        confirmDelete.setBounds(BUTTON_X_POS, 225, 150, 30);
+        confirmDelete.setBackground(Color.white);
         confirmDelete.setActionCommand("delete item");
         confirmDelete.addActionListener(this);
         confirmDelete.setFocusable(false);
@@ -142,7 +161,7 @@ public class TasksPage extends JFrame implements ActionListener {
     }
 
     private void completeTaskMenu() {
-        completeTask = new JTextField("enter task", 10);
+        makeTextFields();
         completeTask.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -153,6 +172,8 @@ public class TasksPage extends JFrame implements ActionListener {
             }
         });
         JButton confirmComplete = new JButton("Complete");
+        confirmComplete.setBounds(BUTTON_X_POS, 335, 150, 30);
+        confirmComplete.setBackground(Color.white);
         confirmComplete.setActionCommand("complete item");
         confirmComplete.addActionListener(this);
         confirmComplete.setFocusable(false);
@@ -166,16 +187,27 @@ public class TasksPage extends JFrame implements ActionListener {
         home.setFocusable(false);
         home.setActionCommand("Go back to main page");
         home.addActionListener(this);
-        home.setBackground(Color.white);
-        home.setBounds(WIDTH / 3, 600, 50, 30);
+        home.setBounds(RIGHT_PANE_WIDTH / 3 + 10, RIGHT_PANE_HEIGHT - 80, 150, 30);
+        home.setBorder(BorderFactory.createRaisedBevelBorder());
         rightPane.add(home);
     }
 
     private void createHeader() {
         header = new JLabel("MY TASKS");
         header.setFont(new Font("header", 1, FONT_SIZE));
-        //header.setBounds(15, 5, 50, 50);
         add(header);
+        addTaskHeader = new JLabel("ADD TASK:");
+        addTaskHeader.setFont(new Font("options", 1, SUB_FONT));
+        addTaskHeader.setBounds(10, 20, 200, 30);
+        rightPane.add(addTaskHeader);
+        removeTaskHeader = new JLabel("REMOVE TASK: ");
+        removeTaskHeader.setFont(new Font("options", 1, SUB_FONT));
+        removeTaskHeader.setBounds(10, 160, 200, 30);
+        rightPane.add(removeTaskHeader);
+        completeTaskHeader = new JLabel("COMPLETE TASK: ");
+        completeTaskHeader.setFont(new Font("options", 1, SUB_FONT));
+        completeTaskHeader.setBounds(10, 270, 200, 30);
+        rightPane.add(completeTaskHeader);
     }
 
     public String printTasks() {

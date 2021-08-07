@@ -19,6 +19,8 @@ public class CoursesPage extends JFrame implements ActionListener {
     private static final int HEIGHT = 650;
     private static final int FONT_SIZE = 30;
     private static final int DIVIDER_POSITION = 380;
+    private static final int RIGHT_PANE_WIDTH = 50;
+    private static final int RIGHT_PANE_HEIGHT = 650;
 
     private JLabel header;
     private JTextField remove;
@@ -47,7 +49,7 @@ public class CoursesPage extends JFrame implements ActionListener {
         add(splitPane);
 
         setVisible(true);
-        setResizable(false);
+        setResizable(true);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
@@ -67,7 +69,7 @@ public class CoursesPage extends JFrame implements ActionListener {
     }
 
     public void setUpRightPane() {
-        rightPane.setLayout(new FlowLayout());
+        rightPane.setLayout(null);
         rightPane.setBackground(new Color(255, 212, 213));
     }
 
@@ -183,6 +185,7 @@ public class CoursesPage extends JFrame implements ActionListener {
         home.setActionCommand("Go back to main page");
         home.addActionListener(this);
         home.setBackground(Color.white);
+        home.setBounds(RIGHT_PANE_WIDTH / 3 + 10, RIGHT_PANE_HEIGHT - 80, 150, 30);
         rightPane.add(home);
     }
 
