@@ -22,7 +22,7 @@ import java.util.Scanner;
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 // Course tasks application
 public class AgendaApp {
-    /*
+
     private static final String JSON_TASKS = "./data/tasks.json";
     private static final String JSON_COURSES = "./data/courses.json";
     private static final String JSON_COMPLETED_TASKS = "./data/completed.json";
@@ -333,6 +333,6 @@ public class AgendaApp {
             System.out.println("Unable to retrieve from file: " + JSON_COMPLETED_TASKS);
         }
     }
-*/
+
 }
 

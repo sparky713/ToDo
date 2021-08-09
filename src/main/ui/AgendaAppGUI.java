@@ -71,7 +71,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads my courses, tasks, and completed tasks
+    // EFFECTS: loads my courses, tasks, and completed tasks from file
     public void loadData() {
         loadCourses();
         loadTasks();
@@ -99,9 +99,9 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates and adds a JLabel to the JFrame
+    // EFFECTS: creates and adds a JLabel to the Main page
     public void addHeader() {
-        welcome = new JLabel("WELCOME");
+        welcome = new JLabel("WELCOME!");
         welcome.setFont(new Font("Header", 1, FONT_SIZE));
         welcome.setBounds(12, 10, 200, 50);
         add(welcome);
@@ -109,7 +109,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: creates and adds the save, check loading status, view tools, courses, and completed tasks
-    // buttons to main screen
+    // buttons to main page
     public void addButtons() {
         coursesButton();
         tasksButton();
@@ -119,7 +119,8 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates and adds a save button to the main page that saves all changes to file
+    // EFFECTS: creates and adds a save button to the main page that saves all changes to file, shows a popup pane to
+    // confirm the save
     public void saveButton() {
         save = new JButton("SAVE CHANGES");
         save.setBounds(10, HEIGHT - 75, BUTTON - 30, 30);
@@ -144,7 +145,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates and adds the view courses button to main screen
+    // EFFECTS: creates and adds the view courses button which leads to the courses page to the main screen
     public void coursesButton() {
         viewCourses = new JButton("COURSES");
         viewCourses.setBounds(10, GAP_FROM_TOP, BUTTON, BUTTON);
@@ -157,7 +158,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates and adds the view tasks button to main screen
+    // EFFECTS: creates and adds the view tasks button which leads to the tasks page to the main screen
     public void tasksButton() {
         viewTasks = new JButton("TASKS");
         viewTasks.setBounds(BUTTON + BUTTON_GAP * 2, GAP_FROM_TOP, BUTTON, BUTTON);
@@ -170,7 +171,8 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates and adds the view completed tasks button to main screen
+    // EFFECTS: creates and adds the view completed tasks button which leads to the completed tasks page
+    // to the main screen
     public void completedTasksButton() {
         viewCompletedTasks = new JButton("COMPLETED TASKS");
         viewCompletedTasks.setBounds(10, GAP_FROM_TOP + BUTTON_GAP + BUTTON,
@@ -185,6 +187,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: handles action event when buttons are clicked
+    //          opens new pages corresponding to the buttons or saves changes to file
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("View Courses")) {
@@ -217,6 +220,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     }
 
 
+    // MODIFIES: this
     // EFFECTS: saves the task list to file
     private void saveTasks() {
         try {
@@ -229,6 +233,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: saves the course list to file
     private void saveCourses() {
         try {
@@ -241,6 +246,7 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: saves the completed tasks list to file
     private void saveCompletedTasks() {
         try {

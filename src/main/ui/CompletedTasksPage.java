@@ -44,6 +44,7 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
         pack();
     }
 
+    // MODIFIES: this
     // EFFECTS: sets the text, its font, and color for the non editable text area
     public void setUpTextArea() {
         textArea = new JTextArea();
@@ -97,7 +98,7 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: handles events for the home button
+    // EFFECTS: handles events for the home button, closes the current page
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Go back to main page")) {
