@@ -39,16 +39,12 @@ public class CoursesPage extends JFrame implements ActionListener {
     private JScrollPane leftPane = new JScrollPane();
     private JTextArea leftTextArea;
     private JPanel rightPane = new JPanel();
-    private TaskList tl;
     private CourseList cl;
-    private TaskList ctl;
     private SoundEffect se;
 
     // EFFECTS: constructs a new CoursesPage with a split pane and additional features
-    public CoursesPage(TaskList tl, CourseList cl, TaskList ctl) {
-        this.tl = tl;
+    public CoursesPage(CourseList cl) {
         this.cl = cl;
-        this.ctl = ctl;
         setUpSplitPane();
 
         createHeader();
@@ -291,13 +287,17 @@ public class CoursesPage extends JFrame implements ActionListener {
     public void deleteHelper() {
         se = new SoundEffect();
         String completeSound = "./data/sound/Delete.wav";
+        String error = "./data/sound/Error.wav";
         try {
             cl.removeCourse(cl.getCourse(remove.getText()));
+            se.setFile(completeSound);
+            se.playSound();
         } catch (CourseNotFoundException courseNotFoundException) {
-            courseNotFoundException.printStackTrace();
+            System.out.println("That Course does not exist!");
+            se.setFile(error);
+            se.playSound();
         }
-        se.setFile(completeSound);
-        se.playSound();
+
         repaint();
         leftTextArea.setText(printCourses());
         remove.setText("enter course");

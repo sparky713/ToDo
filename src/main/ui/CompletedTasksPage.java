@@ -19,18 +19,14 @@ public class CompletedTasksPage extends JFrame implements ActionListener {
     private JTextArea textArea;
     private JLabel header;
     private JScrollPane scroll;
-    private TaskList tl;
-    private CourseList cl;
     private TaskList ctl;
     private Dimension textBox = new Dimension(WIDTH - 70, HEIGHT - 150);
     private JButton home;
 
     // EFFECTS: constructs a new CompletedTasksPage with a JTextArea and additional features
-    public CompletedTasksPage(TaskList tl, CourseList cl, TaskList ctl) {
+    public CompletedTasksPage(TaskList ctl) {
         super("Completed Tasks");
         this.ctl = ctl;
-        this.cl = cl;
-        this.tl = tl;
         getContentPane().setBackground(new Color(203, 240, 255));
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));

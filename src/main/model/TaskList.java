@@ -8,6 +8,7 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 // Represents an arraylist of tasks to be handled
@@ -108,5 +109,6 @@ public class TaskList implements Writable {
 
         return jsonArray;
     }
+
 }
 

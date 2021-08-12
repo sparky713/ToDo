@@ -36,7 +36,6 @@ public class AgendaApp {
     private TaskReader jsonTasksReader;
     private TaskReader jsonCompletedTasksReader;
     private CourseReader jsonCoursesReader;
-    private CompletedTasksPage ctp;
 
     // EFFECTS: runs the application
     public AgendaApp() throws FileNotFoundException {

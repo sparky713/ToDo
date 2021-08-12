@@ -22,6 +22,15 @@ deadlines. Therefore, this motivated me to focus my 210 project on a school-orie
 tracker application for the people of my school community.
 
 
+Phase 4: Task 2
+I have implemented a robust design for the getCourse() method in the CourseList class and the getTask() method 
+in the TaskList class. The exceptions are caught in the TasksPage class in the deletingAction() and completingAction(),
+and in the CoursesPage class in the deleteHelper() method.
+
+Phase 4: Task 3
+- 
+
+
 ## User Stories
 
 - As a user, I want to be able to add a course to my course list (done)

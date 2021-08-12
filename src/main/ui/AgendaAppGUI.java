@@ -191,13 +191,13 @@ public class AgendaAppGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("View Courses")) {
-            new CoursesPage(myTasks, myCourses, completedTasks);
+            new CoursesPage(myCourses);
 
         } else if (e.getActionCommand().equals("View Tasks")) {
-            new TasksPage(myTasks, myCourses, completedTasks);
+            new TasksPage(myTasks, completedTasks);
 
         } else if (e.getActionCommand().equals("View Completed Tasks")) {
-            new CompletedTasksPage(myTasks, myCourses, completedTasks);
+            new CompletedTasksPage(completedTasks);
 
         } else if (e.getActionCommand().equals("View Status")) {
             new StatusPage(loadTime);

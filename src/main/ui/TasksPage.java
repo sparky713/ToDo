@@ -41,15 +41,13 @@ public class TasksPage extends JFrame implements ActionListener {
     private JScrollPane leftPane;
     private JPanel rightPane = new JPanel();
     private TaskList tl;
-    private CourseList cl;
     private TaskList ctl;
     private SoundEffect se;
 
     // EFFECTS: constructs a new TasksPage with a split pane and additional features
-    public TasksPage(TaskList tl, CourseList cl, TaskList ctl) {
+    public TasksPage(TaskList tl, TaskList ctl) {
         super("My Tasks");
         this.tl = tl;
-        this.cl = cl;
         this.ctl = ctl;
         setUpSplitPane();
         createHeader();
@@ -278,13 +276,16 @@ public class TasksPage extends JFrame implements ActionListener {
     private void deletingAction() {
         se = new SoundEffect();
         String completeSound = "./data/sound/Delete.wav";
+        String error = "./data/sound/Error.wav";
         try {
             tl.removeTask(tl.getTask(removeTask.getText()));
+            se.setFile(completeSound);
+            se.playSound();
         } catch (TaskNotFoundException taskNotFoundException) {
-            taskNotFoundException.printStackTrace();
+            System.out.println("That task does not exist!");
+            se.setFile(error);
+            se.playSound();
         }
-        se.setFile(completeSound);
-        se.playSound();
         repaint();
         leftTextArea.setText(printTasks());
         removeTask.setText("enter task");
@@ -297,14 +298,17 @@ public class TasksPage extends JFrame implements ActionListener {
     private void completingAction() {
         se = new SoundEffect();
         String completeSound = "./data/sound/Ding.wav";
+        String error = "./data/sound/Error.wav";
         try {
             ctl.addTask(tl.getTask(completeTask.getText()));
             tl.removeTask(tl.getTask(completeTask.getText()));
+            se.setFile(completeSound);
+            se.playSound();
         } catch (TaskNotFoundException taskNotFoundException) {
-            taskNotFoundException.printStackTrace();
+            System.out.println("That task does not exist!");
+            se.setFile(error);
+            se.playSound();
         }
-        se.setFile(completeSound);
-        se.playSound();
         repaint();
         leftTextArea.setText(printTasks());
         completeTask.setText("enter task");
