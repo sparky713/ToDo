@@ -23,11 +23,13 @@ tracker application for the people of my school community.
 
 
 Phase 4: Task 2
+
 I have implemented a robust design for the getCourse() method in the CourseList class and the getTask() method 
 in the TaskList class. The exceptions are caught in the TasksPage class in the deletingAction() and completingAction(),
 and in the CoursesPage class in the deleteHelper() method.
 
 Phase 4: Task 3
+
 - implement the iterator design for the TaskList and CourseList classes so that I won't need to call getTasks/getCourses
 to iterate through the collection
   - introduce a super class that is abstract to remove duplicating methods in the TaskList & CourseList classes and the 
