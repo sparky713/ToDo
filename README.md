@@ -28,7 +28,12 @@ in the TaskList class. The exceptions are caught in the TasksPage class in the d
 and in the CoursesPage class in the deleteHelper() method.
 
 Phase 4: Task 3
-- 
+- implement the iterator design for the TaskList and CourseList classes so that I won't need to call getTasks/getCourses
+to iterate through the collection
+  - introduce a super class that is abstract to remove duplicating methods in the TaskList & CourseList classes and the 
+    TasksPage & CoursesPage classes. These classes would extend the abstract super class and provide different 
+    implementations for methods that require the differentiation (such as the different positions for certain buttons/
+    text fields between the TasksPage & CoursesPage).
 
 
 ## User Stories
