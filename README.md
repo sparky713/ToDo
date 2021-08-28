@@ -2,7 +2,7 @@
 
 ## Proposal
 
-My project for CPSC210 is a personal **agenda application** designed to help keep students on track with their courses
+A personal **agenda application** designed to help keep students on track with their courses
 and make personalized to-do lists. This application is intended for all UBC students and especially those who need extra
 assistance in managing their time and meeting deadlines. With the move to online learning, many courses use different
 platforms to deliver the course contents. With this application, you will now be able to see your tasks for all your
@@ -17,7 +17,7 @@ different courses in one spot.
 I wanted to create this project ever since starting first year at UBC online when I had to keep track of all the
 different websites and modes of delivery that different courses preferred. Personally, keeping a paper agenda is not as
 effective as a digital one that can send reminders so that I don't accidentally miss deadlines. Therefore, this
-motivated me to focus my 210 project on a school-oriented homework and course tracker application for the people of my
+motivated me to focus my project on a school-oriented homework and course tracker application for the people of my
 school community.
 
 Phase 4: Task 2
