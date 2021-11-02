@@ -4,9 +4,9 @@
 
 A personal **agenda application** designed to help keep students on track with their courses
 and make personalized to-do lists. This application is intended for all UBC students and especially those who need extra
-assistance in managing their time and meeting deadlines. With the move to online learning, many courses use different
-platforms to deliver the course contents. With this application, you will now be able to see your tasks for all your
-different courses in one spot.
+assistance in managing their time and meeting deadlines. With the move to online learning, many courses use various
+platforms to deliver course content. With this application, you will now be able to manage your tasks for all your 
+courses in one spot.
 
 *Features*:
 
@@ -14,23 +14,15 @@ different courses in one spot.
 - A personalized todo list with due dates
 - Individual course tabs with tasks specific to the course
 
-I wanted to create this project ever since starting first year at UBC online when I had to keep track of all the
-different websites and modes of delivery that different courses preferred. Personally, keeping a paper agenda is not as
-effective as a digital one that can send reminders so that I don't accidentally miss deadlines. Therefore, this
-motivated me to focus my project on a school-oriented homework and course tracker application for the people of my
-school community.
-
 Phase 4: Task 2
 
 I have implemented a robust design for the getCourse() method in the CourseList class and the getTask() method in the
-TaskList class. The exceptions are caught in the TasksPage class in the deletingAction() and completingAction(), and in
-the CoursesPage class in the deleteHelper() method.
+TaskList class. The exceptions are caught in the TasksPage class in the deletingAction() and completingAction() methods,
+as well as in the CoursesPage class in the deleteHelper() method.
 
 Phase 4: Task 3
-
-- implement the iterator design for the TaskList and CourseList classes so that I won't need to call getTasks/getCourses
-  to iterate through the collection
-- introduce a super class that is abstract to remove duplicating methods in the TaskList & CourseList classes and the
+ 
+- introduce a super class that is abstract to remove duplicating methods in the TaskList & CourseList classes, and the
   TasksPage & CoursesPage classes. These classes would extend the abstract super class and provide different
   implementations for methods that require the differentiation (such as the different positions for certain buttons/
   text fields between the TasksPage & CoursesPage).

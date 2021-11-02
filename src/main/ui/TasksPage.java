@@ -243,10 +243,9 @@ public class TasksPage extends JFrame implements ActionListener {
 
     // EFFECTS: returns a string of all tasks in the tasks list with their due dates in brackets
     public String printTasks() {
-        List<Task> tasksList = tl.getTasks();
         String tasks = "";
 
-        for (Task t : tasksList) {
+        for (Task t : tl) {
             tasks += "- " + t.getTaskDescription() + "   (Due: " + t.getDueDate() + ") \n";
         }
 

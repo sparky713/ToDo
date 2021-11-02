@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 // Represents an arraylist of tasks to be handled
-public class TaskList implements Writable {
+public class TaskList implements Writable, Iterable<Task> {
 
     private ArrayList<Task> tasksToDo;
 
@@ -90,6 +90,11 @@ public class TaskList implements Writable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return tasksToDo.iterator();
     }
 
     @Override

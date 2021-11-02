@@ -245,10 +245,9 @@ public class CoursesPage extends JFrame implements ActionListener {
     // EFFECTS: returns a string of all courses in the courses list with their start time, end time, and
     // professor in brackets
     public String printCourses() {
-        List<Course> courseList = cl.getCourses();
         String courses = "";
 
-        for (Course c : courseList) {
+        for (Course c : cl) {
             courses += c.getCode() + "   (" + c.getStartTime() + " - " + c.getEndTime()
                     + " Prof: " + c.getProfessor() + ")" + "\n";
         }

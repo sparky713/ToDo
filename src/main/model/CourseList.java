@@ -7,10 +7,11 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 // Represents an arraylist of courses
-public class CourseList implements Writable {
+public class CourseList implements Writable, Iterable<Course> {
 
     private ArrayList<Course> myCourses;
 
@@ -72,6 +73,11 @@ public class CourseList implements Writable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Iterator<Course> iterator() {
+        return myCourses.iterator();
     }
 
     @Override
