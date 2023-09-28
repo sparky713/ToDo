@@ -1,50 +1,39 @@
-# CPSC 210 Final Project
+# ToDo: CPSC 210 Final Project
 
 ## Proposal
 
-A personal **agenda application** designed to help keep students on track with their courses
-and make personalized to-do lists. This application is intended for all UBC students and especially those who need extra
+A personalized **agenda application** designed to help keep students on track with their courses
+and create personalized to-do lists. This application is intended for all UBC students and especially those who need extra
 assistance in managing their time and meeting deadlines. With the move to online learning, many courses use various
 platforms to deliver course content. With this application, you will now be able to manage your tasks for all your 
 courses in one spot.
 
+<pre>
 *Features*:
 
 - A list of your currently enrolled classes
 - A personalized todo list with due dates
 - Individual course tabs with tasks specific to the course
+ </pre>
 
-Phase 4: Task 2
+## Language/Library/IDE
 
-I have implemented a robust design for the getCourse() method in the CourseList class and the getTask() method in the
-TaskList class. The exceptions are caught in the TasksPage class in the deletingAction() and completingAction() methods,
-as well as in the CoursesPage class in the deleteHelper() method.
+<hr>
+<b>Language:</b>  Java <br>
+<b>Library</b>: Java Swing <br>
+<b>IDE</b>: IntelliJ IDEA
+<hr>
 
-Phase 4: Task 3
- 
-- introduce a super class that is abstract to remove duplicating methods in the TaskList & CourseList classes, and the
-  TasksPage & CoursesPage classes. These classes would extend the abstract super class and provide different
-  implementations for methods that require the differentiation (such as the different positions for certain buttons/
-  text fields between the TasksPage & CoursesPage).
+Skills learned:
 
-## User Stories
+- Using the Java Swing library to construct a working GUI utilizing different UI components
+- Applying Object-Oriented Programming and polymorphism in software design
+- Utilization of JUnit testing to create unit tests and assess code coverage to ensure reliability
+    - Use tests to identify bugs in the program and efficiently debug
+    - Refactor after testing to improve readability and maintainability
+- Using the JSON API to save and load data
 
-- As a user, I want to be able to add a course to my course list (done)
-- As a user, I want to be able to remove a course from my course list (done)
-- As a user, I want to be able to view all my courses in the course list (done)
-- As a user, I want to be able to set a start and end time for my courses (done)
+### Overview
+### Main Page:
 
-- As a user, I want to be able to add a task to my task list (done)
-- As a user, I want to be able to remove a task from my task list (done)
-- As a user, I want to be able to complete a task from my task list (done)
-- As a user, I want to be able to view all my completed tasks (done)
-- As a user, I want to be able to view all my tasks in my task list (done)
-- As a user, I want to be able to set a deadline for my tasks (done)
-
-
-- As a user, I want to be able to save my tasks to file (done)
-- As a user, I want to be able to save my courses to file (done)
-- As a user, I want to be able to save my completed tasks to file (done)
-- As a user, I want to be able to load my tasks list from file (done)
-- As a user, I want to be able to load my courses from file (done)
-- As a user, I want to be able to load my completed tasks to file (done)
+![CPSC210 Project (still in progress).PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4f72df0e-f1b3-4b15-8c6d-ae3c5b5450c9/CPSC210_Project_(still_in_progress).png)
