@@ -1,4 +1,4 @@
-# ToDo: CPSC 210 Final Project
+# ToDo: Software Construction Final Project
 
 ## Proposal
 
